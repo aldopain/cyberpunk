@@ -1,9 +1,7 @@
 fileFormatVersion: 2
 guid: 8684271eafd895741a67b1e0de9af3b8
-timeCreated: 1534099907
-licenseType: Free
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     100002: Box001
@@ -35,7 +33,7 @@ ModelImporter:
     400024: Box012
     400026: Box013
     400028: Box014
-    2100000: 02 - Default
+    2100000: 'Material #0'
     2300000: Box001
     2300002: Box002
     2300004: Box003
@@ -97,6 +95,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -128,6 +127,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
