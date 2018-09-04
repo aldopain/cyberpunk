@@ -12009,7 +12009,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0
+  near clip plane: -5
   far clip plane: 7
   field of view: 35.5
   orthographic: 1
@@ -12035,13 +12035,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1262675103}
-  m_LocalRotation: {x: 0.46193978, y: 0.19134173, z: 0.19134173, w: 0.84462327}
-  m_LocalPosition: {x: -0.492, y: 2.105, z: -11.379}
+  m_LocalRotation: {x: 0.22909498, y: 0.28709456, z: -0.070921116, w: 0.9273955}
+  m_LocalPosition: {x: -0.551, y: 1.043, z: -11.379}
   m_LocalScale: {x: 2.1412, y: 2.1412, z: 2.1412}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 45, y: 45, z: 45}
+  m_LocalEulerAnglesHint: {x: 27.752, y: 34.402, z: 0}
 --- !u!114 &1262675108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12053,6 +12053,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45492e34d5c7cc0449f7e9c54436f205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FollowedObject: {fileID: 1933257288}
+  FollowSpeed: 0.05
+  OffsetMultiplier: 0.25
 --- !u!1001 &1280479092
 Prefab:
   m_ObjectHideFlags: 0
@@ -18035,6 +18038,11 @@ Prefab:
 --- !u!1 &1933257286 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100054, guid: 2093826e2e7b8944a9db2ee45b935669,
+    type: 3}
+  m_PrefabInternal: {fileID: 753199792}
+--- !u!4 &1933257288 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400054, guid: 2093826e2e7b8944a9db2ee45b935669,
     type: 3}
   m_PrefabInternal: {fileID: 753199792}
 --- !u!114 &1933257289
