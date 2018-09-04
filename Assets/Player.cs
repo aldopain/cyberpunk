@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 	public float speed = 1.0f;
+	CharacterController cc;
 
 	// Use this for initialization
 	void Start () {
-		
+		cc = GetComponent<CharacterController>();
 	}
 
-	void Move(){
-		var x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
-        var z = Input.GetAxis("Vertical") * Time.deltaTime * speed;
-
-        transform.Translate(x, 0, z);
+	void Move () {
+		var move = new Vector3(Input.GetAxis("Horizontal"), -1000f, Input.GetAxis("Vertical"));
+		cc.Move(move * Time.deltaTime * speed);
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		Move();
 	}
 }
