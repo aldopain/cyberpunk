@@ -4152,10 +4152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5fb149348a28244c998366132fdda35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  line: {fileID: 643634204}
-  RaycastMask:
-    serializedVersion: 2
-    m_Bits: 51
 --- !u!1001 &554181181
 Prefab:
   m_ObjectHideFlags: 0
@@ -4884,7 +4880,6 @@ GameObject:
   m_Component:
   - component: {fileID: 643634205}
   - component: {fileID: 643634204}
-  - component: {fileID: 643634206}
   m_Layer: 0
   m_Name: TargetingLine
   m_TagString: Untagged
@@ -4997,17 +4992,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &643634206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 643634203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f249d0fdff90454e92bdb60c1f53bce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &643693826
 Prefab:
   m_ObjectHideFlags: 0
@@ -11225,12 +11209,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df4962a99744a0643a864191440b6bee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AimingDistance: 2
   mask:
     serializedVersion: 2
     m_Bits: 51
   _crosshair: {fileID: 552966473}
   _line: {fileID: 643634204}
-  AimingDistance: 2
 --- !u!4 &1933257288 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400054, guid: 2093826e2e7b8944a9db2ee45b935669,
