@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Crosshair : MonoBehaviour {
     Vector2 _mousePos;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
+    public LineRenderer line;
+    public LayerMask RaycastMask;
+    // Use this for initialization
+    void Start () {
+        line.positionCount = 2;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = _mousePos;
-
+        //_mousePos = Input.mousePosition;
+        //transform.position = _mousePos;
     }
 }
