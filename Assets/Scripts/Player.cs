@@ -20,9 +20,7 @@ public class Player : MonoBehaviour {
 		var move = new Vector3(h, -1000f, v);
 		float r = 0f;
 		if (v == 0) {
-			Debug.Log("h = " + h);
 			r = 180 * (h + 1);
-			Debug.Log("r = " + r);
 		} else if (h == 0)
 			r = 90 * v;
 		else
