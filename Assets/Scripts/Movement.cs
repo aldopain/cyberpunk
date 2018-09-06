@@ -8,13 +8,14 @@ public class Movement : MonoBehaviour {
 	private Vector3 curLoc;
 	private Vector3 prevLoc;
 	CharacterController cc;
-	Transform target;
+    [SerializeField]
+    Transform target;
 	float originalRotation = -180;
 
 	// Use this for initialization
 	void Start () {
 		cc = GetComponent<CharacterController>();
-		target = GameObject.Find("TargetForRotation").transform;
+        target.position = transform.position;
 	}
 
 	void Move () {
