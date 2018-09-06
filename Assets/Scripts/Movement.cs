@@ -5,6 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour {
     [Header("Character Speed")]
 	public float MovementSpeed = 1.0f;
+    public float WalkingSpeed = .7f;
 	public float lookSpeed = 10;
     public float CrouchSpeed = .5f;
 
@@ -120,5 +121,15 @@ public class Movement : MonoBehaviour {
         {
             Stand();
         }
-	}
+
+        //TO BE REWORKED; TESTING WALKING
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Speed = WalkingSpeed;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            Speed = MovementSpeed;
+        }
+    }
 }
