@@ -8,43 +8,43 @@ public class CameraController : MonoBehaviour {
     public float FollowSpeed;
 
     [Header("Zoom Settings")]
+    public float minZoom;
+    public float maxZoom;
     public float orthoSizeTarget;
     [Range(0, 1)]
     public float zoomSpeed;
+    public float scrollAdd;
 
     [Header("Camera Settings")]
     public float OffsetMultiplier;
 
     //Private variables
     private Camera attachedCamera;
+    private Vector3 diff;
 
     void Start()
     {
         attachedCamera = GetComponent<Camera>();
+        diff = FollowedObject != null ? transform.position - FollowedObject.transform.position : Vector3.zero;
     }
 
 	void Update () {
-        if(FollowedObject != null)
-        {
-            //Move camera between mouse cursor and FollowTarget
-            transform.position = Vector3.Lerp(transform.position, (FollowedObject.position + (Vector3.one * OffsetMultiplier) + Camera.main.ScreenToWorldPoint(Input.mousePosition))/2, FollowSpeed);
+        if(FollowedObject != null) {
+            transform.position = FollowedObject.transform.position + diff;
             
-            //Zoom to the orthoSizeTarget
             attachedCamera.orthographicSize = Mathf.Lerp(attachedCamera.orthographicSize, orthoSizeTarget, zoomSpeed);
-        }else
-        {
+        } else {
             Debug.LogError(name + ": Doesn't have an object to follow.");
         }
 
-        //TEST CODE; TO BE REPLACED
-        //Pressing Tab zoomes out the camera to the hardcoded value (for now; don't see any reason to develop this part further)
-        if (Input.GetKey(KeyCode.Tab))
-        {
-            orthoSizeTarget = 3f;
-        }else
-        {
-            orthoSizeTarget = 1.5f;
+        if (Input.GetAxis("Mouse ScrollWheel") < 0) {
+            if (orthoSizeTarget < maxZoom)
+                orthoSizeTarget += scrollAdd;
+        }else if (Input.GetAxis("Mouse ScrollWheel") > 0) {
+            if (orthoSizeTarget > minZoom)
+                orthoSizeTarget -= scrollAdd;
         }
+
 
 	}
 
