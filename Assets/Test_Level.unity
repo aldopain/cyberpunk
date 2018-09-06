@@ -7795,7 +7795,8 @@ MonoBehaviour:
   FollowSpeed: 0.05
   minZoom: 0.65
   maxZoom: 1.78
-  orthoSizeTarget: 1.5
+  orthoSizeTarget_Default: 1.79
+  orthoSizeTarget_Crouch: 1.5
   zoomSpeed: 0.5
   scrollAdd: 0.02
   OffsetMultiplier: 0.1
@@ -10968,8 +10969,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c254c9f6ef304d849aa0284dc2f3a7c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  MovementSpeed: 1
   lookSpeed: 10
+  CrouchSpeed: 0.5
   target: {fileID: 260291902}
 --- !u!4 &1933257288 stripped
 Transform:

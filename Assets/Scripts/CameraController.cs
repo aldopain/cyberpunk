@@ -10,7 +10,8 @@ public class CameraController : MonoBehaviour {
     [Header("Zoom Settings")]
     public float minZoom;
     public float maxZoom;
-    public float orthoSizeTarget;
+    public float orthoSizeTarget_Default;
+    public float orthoSizeTarget_Crouch;
     [Range(0, 1)]
     public float zoomSpeed;
     public float scrollAdd;
@@ -19,6 +20,7 @@ public class CameraController : MonoBehaviour {
     public float OffsetMultiplier;
 
     //Private variables
+    private float orthoSizeTarget;
     private Camera attachedCamera;
     private Vector3 diff;
 
@@ -26,6 +28,7 @@ public class CameraController : MonoBehaviour {
     {
         attachedCamera = GetComponent<Camera>();
         diff = FollowedObject != null ? transform.position - FollowedObject.transform.position : Vector3.zero;
+        orthoSizeTarget = orthoSizeTarget_Default;
     }
 
 	void Update () {
@@ -48,6 +51,10 @@ public class CameraController : MonoBehaviour {
 
 	}
 
+    public void SetSizeTarget(float target)
+    {
+        orthoSizeTarget = target;
+    }
     
     public void SetTarget(Transform t)
     {
