@@ -8,12 +8,14 @@ public class RadialPlayerAiming : MonoBehaviour
     public Crosshair _crosshair;
     public LineRenderer _line;
     public float AimingDistance;
+    public float AimingSpeed;
 
-    public float RotationAngle;
+    private float RotationAngle;
     // Use this for initialization
     void Start()
     {
-        _line.SetPosition(0, Vector3.zero);    
+        _line.SetPosition(0, Vector3.zero);
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -24,6 +26,7 @@ public class RadialPlayerAiming : MonoBehaviour
 
         RotationAngle = Mathf.Atan2(Input.mousePosition.y - Camera.main.WorldToScreenPoint(transform.position).y, Input.mousePosition.x - Camera.main.WorldToScreenPoint(transform.position).x) + (Mathf.Deg2Rad * 90);
 
+        RotationAngle *= AimingSpeed;
         Vector3 crosshairPos;
         crosshairPos.x = transform.position.x + AimingDistance * Mathf.Cos(RotationAngle);
         crosshairPos.z = transform.position.z + AimingDistance * Mathf.Sin(RotationAngle);
