@@ -16,9 +16,6 @@ public class CameraController : MonoBehaviour {
     public float zoomSpeed;
     public float scrollAdd;
 
-    [Header("Camera Settings")]
-    public float OffsetMultiplier;
-
     //Private variables
     private float orthoSizeTarget;
     private Camera attachedCamera;
@@ -27,19 +24,30 @@ public class CameraController : MonoBehaviour {
     void Start()
     {
         attachedCamera = GetComponent<Camera>();
-        diff = FollowedObject != null ? transform.position - FollowedObject.transform.position : Vector3.zero;
+        diff = FollowedObject != null ? transform.position - FollowedObject.position : Vector3.zero;
         orthoSizeTarget = orthoSizeTarget_Default;
     }
 
 	void Update () {
         if(FollowedObject != null) {
-            transform.position = FollowedObject.transform.position + diff;
             
+            //Position setting
+            if (Input.GetKey(KeyCode.Tab))
+            {
+                transform.position = Vector3.Lerp(transform.position, (FollowedObject.position + diff + Camera.main.ScreenToWorldPoint(Input.mousePosition)) / 2, FollowSpeed);
+            }
+            else
+            {
+                transform.position = Vector3.Lerp(transform.position, FollowedObject.position + diff, FollowSpeed);
+            }
+            
+            //Size setting
             attachedCamera.orthographicSize = Mathf.Lerp(attachedCamera.orthographicSize, orthoSizeTarget, zoomSpeed);
         } else {
             Debug.LogError(name + ": Doesn't have an object to follow.");
         }
 
+        //Zoom
         if (Input.GetAxis("Mouse ScrollWheel") < 0) {
             if (orthoSizeTarget < maxZoom)
                 orthoSizeTarget += scrollAdd;
