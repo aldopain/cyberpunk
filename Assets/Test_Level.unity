@@ -9310,6 +9310,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FollowedObject: {fileID: 1933257288}
   FollowSpeed: 0.1
+  FreelookSpeed: 0.1
+  FreelookLength: 2
+  orthoSizeTarget_Freelook: 2
   minZoom: 0.65
   maxZoom: 1.78
   orthoSizeTarget_Default: 1.79
