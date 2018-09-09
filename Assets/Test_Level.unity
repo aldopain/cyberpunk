@@ -13488,6 +13488,7 @@ MonoBehaviour:
   _crosshair: {fileID: 552966473}
   _line: {fileID: 643634204}
   AimingDistance: 0
+  AboveGroundCrosshairHeight: 0.8
 --- !u!4 &1936840881 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4156161891795058, guid: 268742067211f984ab1066bcea820175,
