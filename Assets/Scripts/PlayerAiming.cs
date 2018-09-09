@@ -9,7 +9,6 @@ public class PlayerAiming : MonoBehaviour {
     public float AimingDistance;
     public float AboveGroundCrosshairHeight = 1f;
 
-    Vector3 hui = new Vector3(1,0,0);
 
 	// Use this for initialization
 	void Start () {
@@ -19,7 +18,7 @@ public class PlayerAiming : MonoBehaviour {
     // This converts mouse position to world coordinates
     Vector3 mousePositionToWorld(){
         RaycastHit mouse;
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition+hui), out mouse);
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mouse);
         
         return mouse.point;
 
@@ -35,7 +34,7 @@ public class PlayerAiming : MonoBehaviour {
         Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition) - hit;
         vec = hit+ vec.normalized * AboveGroundCrosshairHeight;
 
-        _crosshair.transform.position = vec
+        _crosshair.transform.position = vec;
         _line.SetPosition(1, _crosshair.transform.position);
     }
 }
