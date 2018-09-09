@@ -7,6 +7,8 @@ public class PlayerAiming : MonoBehaviour {
     public Crosshair _crosshair;
     public LineRenderer _line;
     public float AimingDistance;
+    public float AboveGroundCrosshairHeight = 1f;
+
 
 	// Use this for initialization
 	void Start () {
@@ -16,8 +18,10 @@ public class PlayerAiming : MonoBehaviour {
     // This converts mouse position to world coordinates
     Vector3 mousePositionToWorld(){
         RaycastHit mouse;
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mouse);
-        return mouse.point;
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mouse))
+            return mouse.point;
+        else
+            return Vector3.zero;
     }
 	
 	// Update is called once per frame
@@ -25,14 +29,16 @@ public class PlayerAiming : MonoBehaviour {
         // Set the start of the line at the player position
         _line.SetPosition(0, new Vector3(transform.position.x, transform.position.y + GetComponent<CharacterController>().bounds.extents.y, transform.position.z));
 
-        RaycastHit hit;
-
-        Ray ray = new Ray(transform.position, mousePositionToWorld() - transform.position);
+        Vector3 hit = mousePositionToWorld();
         
-        Physics.Raycast(ray, out hit);
+        //if mousePositionToWorld() returned not a Vector3.zero, then calculate crosshair.position
+        //else do nothing
+        if (!hit.Equals(Vector3.zero)) {
+            Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition) - hit;
+            vec = hit + vec.normalized * AboveGroundCrosshairHeight;
 
-        _crosshair.transform.position = hit.point;
-        
-        _line.SetPosition(1, _crosshair.transform.position);
+            _crosshair.transform.position = vec;
+            _line.SetPosition(1, _crosshair.transform.position);
+        }
     }
 }
