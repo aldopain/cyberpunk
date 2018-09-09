@@ -10,11 +10,11 @@ public class GenericGun : MonoBehaviour {
     public float OrbitingRadius;
 
     //Private variables
-    private RadialPlayerAiming _aim;
+    private PlayerAiming _aim;
 
 	// Use this for initialization
 	void Start () {
-        _aim = GameObject.Find("Player").GetComponent<RadialPlayerAiming>();
+        _aim = GameObject.Find("Player").GetComponent<PlayerAiming>();
 	}
 
     void UpdateRotation()

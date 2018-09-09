@@ -6,9 +6,11 @@ public class PlayerAiming : MonoBehaviour {
     public LayerMask mask;
     public Crosshair _crosshair;
     public LineRenderer _line;
+    public bool useRadialAiming;
     public float AimingDistance;
     public float AboveGroundCrosshairHeight = 1f;
 
+    private float RotationAngle;
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +25,33 @@ public class PlayerAiming : MonoBehaviour {
         else
             return Vector3.zero;
     }
-	
+
+    Vector3 GetPositionOnCircle(Vector3 pos)
+    {
+        Vector3 crosshairPos;
+
+        crosshairPos.x = transform.position.x + AimingDistance * Mathf.Cos(RotationAngle);
+        crosshairPos.z = transform.position.z + AimingDistance * Mathf.Sin(RotationAngle);
+        crosshairPos.y = 0;
+
+        return crosshairPos;
+    }
+
+    public float GetAngle_Rad()
+    {
+        return RotationAngle;
+    }
+
+    public float GetAngle_Deg()
+    {
+        return RotationAngle * Mathf.Rad2Deg;
+    }
+
+    public Vector3 GetCrosshairPosition()
+    {
+        return _crosshair.transform.position;
+    }
+
 	// Update is called once per frame
 	void Update () {
         // Set the start of the line at the player position
@@ -37,7 +65,17 @@ public class PlayerAiming : MonoBehaviour {
             Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition) - hit;
             vec = hit + vec.normalized * AboveGroundCrosshairHeight;
 
-            _crosshair.transform.position = vec;
+            RotationAngle = Mathf.Atan2(vec.y - transform.position.y, vec.x - transform.position.x);
+
+            if (useRadialAiming)
+            {
+                _crosshair.transform.position = GetPositionOnCircle(vec);
+            }
+            else
+            {
+                _crosshair.transform.position = vec;
+            }
+
             _line.SetPosition(1, _crosshair.transform.position);
         }
     }
