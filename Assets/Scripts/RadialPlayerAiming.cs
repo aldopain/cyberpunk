@@ -31,9 +31,42 @@ public class RadialPlayerAiming : MonoBehaviour
         crosshairPos.x = transform.position.x + AimingDistance * Mathf.Cos(RotationAngle);
         crosshairPos.z = transform.position.z + AimingDistance * Mathf.Sin(RotationAngle);
         crosshairPos.y = 0;
-        _crosshair.transform.position = crosshairPos;
+        //_crosshair.transform.position = crosshairPos;
 
-        //Set the end of the line at the crosshair position
-        _line.SetPosition(1, _crosshair.transform.position);
+        Vector3 positionVector = new Vector3(transform.position.x, transform.position.y + GetComponent<CharacterController>().bounds.extents.y, transform.position.z);
+
+        RaycastHit hit;
+        Ray ray = new Ray(positionVector, crosshairPos - positionVector);
+        Physics.Raycast(ray, out hit, AimingDistance, mask);
+
+        //If ray hits something, draw crosshair at hit point
+        //Else, draw crosshair at the point on the edge of the circle
+        if (hit.collider != null)
+        {
+            _crosshair.transform.position = hit.point;
+        }else{
+            _crosshair.transform.position = crosshairPos;
+        }
+
+
+
+
+    //Set the end of the line at the crosshair position
+    _line.SetPosition(1, _crosshair.transform.position);
+    }
+
+    public float GetAngle_Rad()
+    {
+        return RotationAngle;
+    }
+
+    public float GetAngle_Deg()
+    {
+        return RotationAngle * Mathf.Rad2Deg;
+    }
+
+    public Vector3 GetCrosshairPosition()
+    {
+        return _crosshair.transform.position;
     }
 }
