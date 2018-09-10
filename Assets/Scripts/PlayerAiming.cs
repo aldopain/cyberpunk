@@ -6,9 +6,11 @@ public class PlayerAiming : MonoBehaviour {
     public LayerMask mask;
     public Crosshair _crosshair;
     public LineRenderer _line;
+    public bool useRadialAiming;
     public float AimingDistance;
+    public float AboveGroundCrosshairHeight = 1f;
 
-    Vector3 hui = new Vector3(1,0,0);
+    private float RotationAngle;
 
 	// Use this for initialization
 	void Start () {
@@ -18,29 +20,63 @@ public class PlayerAiming : MonoBehaviour {
     // This converts mouse position to world coordinates
     Vector3 mousePositionToWorld(){
         RaycastHit mouse;
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition+hui), out mouse);
-        
-        return mouse.point;
-
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mouse))
+            return mouse.point;
+        else
+            return Vector3.zero;
     }
-	
+
+    Vector3 GetPositionOnCircle(Vector3 pos)
+    {
+        Vector3 crosshairPos;
+
+        crosshairPos.x = transform.position.x + AimingDistance * Mathf.Cos(RotationAngle);
+        crosshairPos.z = transform.position.z + AimingDistance * Mathf.Sin(RotationAngle);
+        crosshairPos.y = 0;
+
+        return crosshairPos;
+    }
+
+    public float GetAngle_Rad()
+    {
+        return RotationAngle;
+    }
+
+    public float GetAngle_Deg()
+    {
+        return RotationAngle * Mathf.Rad2Deg;
+    }
+
+    public Vector3 GetCrosshairPosition()
+    {
+        return _crosshair.transform.position;
+    }
+
 	// Update is called once per frame
 	void Update () {
         // Set the start of the line at the player position
         _line.SetPosition(0, new Vector3(transform.position.x, transform.position.y + GetComponent<CharacterController>().bounds.extents.y, transform.position.z));
 
+        Vector3 hit = mousePositionToWorld();
         
-        RaycastHit hit;
+        //if mousePositionToWorld() returned not a Vector3.zero, then calculate crosshair.position
+        //else do nothing
+        if (!hit.Equals(Vector3.zero)) {
+            Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition) - hit;
+            vec = hit + vec.normalized * AboveGroundCrosshairHeight;
 
-        //Ray ray = new Ray(transform.position, mousePositionToWorld() - transform.position);
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition + hui), out hit);
-        //Physics.Raycast(ray, out hit);
-        Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition) - hit.point;
-        Debug.Log(vec.normalized);
-        Debug.DrawRay(hit.point, Camera.main.ScreenToWorldPoint(Input.mousePosition), Color.green);
-        vec = hit.point+ vec.normalized;
-        _crosshair.transform.position = vec;//hit.point;
-       
-        _line.SetPosition(1, _crosshair.transform.position);
+            RotationAngle = Mathf.Atan2(vec.y - transform.position.y, vec.x - transform.position.x);
+
+            if (useRadialAiming)
+            {
+                _crosshair.transform.position = GetPositionOnCircle(vec);
+            }
+            else
+            {
+                _crosshair.transform.position = vec;
+            }
+
+            _line.SetPosition(1, _crosshair.transform.position);
+        }
     }
 }
