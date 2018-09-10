@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour {
     public float WalkingSpeed = .7f;
 	public float lookSpeed = 10;
     public float CrouchSpeed = .5f;
+    public float dashMultiply = 2f; 
 
     private float _currentSpeed;
     public float Speed
@@ -53,7 +54,7 @@ public class Movement : MonoBehaviour {
         Speed = MovementSpeed;
 	}
 
-	void Move () {
+	void Move (bool isDashing) {
 		var h = Input.GetAxisRaw("Horizontal");
 		var v = Input.GetAxisRaw("Vertical");
 
@@ -66,15 +67,17 @@ public class Movement : MonoBehaviour {
 			buf.y = transform.position.y;
 			target.position = buf;
 			
-			direction.y = -1000f;
+			direction.y = -1f;
 			transform.LookAt(target, Vector3.up);
 			transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 90, transform.eulerAngles.z);
-			cc.Move(direction * Time.deltaTime * Speed);
+
+            var dash = isDashing ? dashMultiply : 1;
+            Debug.Log(direction * Time.deltaTime * Speed * dash);
+			cc.Move(direction * Time.deltaTime * Speed * dash);
 		}
 	}
 
-    void Crouch()
-    {
+    void Crouch () {
         //Return CC to its original height and position
         cc.height /= 2;
         cc.Move(Vector3.down * (cc.height));
@@ -108,9 +111,12 @@ public class Movement : MonoBehaviour {
     }
 
 	// Update is called once per frame
-	void Update () {
-		Move();
-
+	void FixedUpdate () {
+        if (Input.GetKeyUp(KeyCode.G)) {
+            Move(true);
+        } else {
+            Move(false);
+        }
         //TO BE REWORKED; TESTING CROUCH MECHANICS
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
