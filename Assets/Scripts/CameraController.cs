@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour {
         orthoSizeTarget = orthoSizeTarget_Default;
     }
 
-	void Update () {
+	void FixedUpdate () {
         if(FollowedObject != null) {
             
             //Position setting
