@@ -38,12 +38,13 @@ public class DatabaseManager {
 	}
 
 	private ArrayList Read () {
-		ArrayList result = new ArrayList<ArrayList>();
+		ArrayList result = new ArrayList();
 		IDataReader reader = dbcmd.ExecuteReader ();
 		while (reader.Read ()) {
-			ArrayList buf = new ArrayList();
-			reader.GetValues (buf);
-			result.AddAll (buf);
+			//not sure in this
+			object[] bufArr = null;
+			reader.GetValues (bufArr);
+			result.AddRange (new ArrayList(bufArr));
 		}
 		reader.Close ();
 		reader = null;
@@ -54,5 +55,6 @@ public class DatabaseManager {
 		CreateCommand ("SELECT " + collumns + " FROM " + tableName);
 		var result = Read ();
 		DisposeCommand ();
+		return result;
 	}
 }
