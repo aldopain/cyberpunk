@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(Rigidbody))]
+
+[RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class Bullet : MonoBehaviour {
     public float ShootingVelocity;
+    public int Damage;
 	// Use this for initialization
 	void Start () {
 		
@@ -17,5 +19,16 @@ public class Bullet : MonoBehaviour {
     public void Shoot()
     {
         GetComponent<Rigidbody>().velocity = ShootingVelocity * transform.up;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        print("Collided With " + other.name);
+        if(other.GetComponent<HealthController>() != null)
+        {
+            print(other.name + " has a health");
+            other.GetComponent<HealthController>().ChangeHealth(-Mathf.Abs(Damage));
+            Destroy(gameObject);
+        }
     }
 }
