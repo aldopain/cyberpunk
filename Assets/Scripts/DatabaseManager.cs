@@ -5,28 +5,54 @@ using Mono.Data.Sqlite;
 using System;
 using System.Data;
 
-public class DatabaseManager : MonoBehaviour {
+//i have not even tried this shit
+public class DatabaseManager {
+	public static string SELECT_ALL_COLLUMNS = "*";
+	private IDbConnection dbconn;
+	private string dbName;
+	private IDbCommand dbcmd;
 
-	// Use this for initialization
-	void Start () {
-		string conn = "URI=file:" + Application.dataPath + "/PickAndPlaceDatabase.s3db"; //Path to database.
-		IDbConnection dbconn;
-		dbconn = (IDbConnection) new SqliteConnection(conn);
-		dbconn.Open(); //Open connection to the database.
-		IDbCommand dbcmd = dbconn.CreateCommand();
-		
-		//string sqlQuery = <SQL QUERY>;
-		//dbcmd.CommandText = sqlQuery;
-		IDataReader reader = dbcmd.ExecuteReader();
-		while (reader.Read())
-		{
-				//add here reading
-		}
-		reader.Close();
-		reader = null;
-		dbcmd.Dispose();
-		dbcmd = null;
-		dbconn.Close();
+	public DatabaseManager (string name) {
+		dbName = name;
+	}
+
+	public void OpenConnection () {
+		string conn = "URI=file:" + Application.dataPath + "/" + dbName;
+		dbconn = (IDbConnection) new SqliteConnection (conn);
+		dbconn.Open ();
+	}
+
+	public void CloseConnection () {
+		dbconn.Close ();
 		dbconn = null;
+	}
+
+	private void DisposeCommand () {
+		dbcmd.Dispose ();
+		dbcmd = null;
+	}
+
+	private void CreateCommand (string sqlQuery) {
+		IDbCommand dbcmd = dbconn.CreateCommand ();
+		dbcmd.CommandText = sqlQuery;
+	}
+
+	private ArrayList Read () {
+		ArrayList result = new ArrayList<ArrayList>();
+		IDataReader reader = dbcmd.ExecuteReader ();
+		while (reader.Read ()) {
+			ArrayList buf = new ArrayList();
+			reader.GetValues (buf);
+			result.AddAll (buf);
+		}
+		reader.Close ();
+		reader = null;
+		return result;
+	}
+
+	public ArrayList Read (string tableName, string collumns) {
+		CreateCommand ("SELECT " + collumns + " FROM " + tableName);
+		var result = Read ();
+		DisposeCommand ();
 	}
 }
