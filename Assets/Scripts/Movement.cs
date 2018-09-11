@@ -45,9 +45,18 @@ public class Movement : MonoBehaviour {
         }
     }
 
+    private bool _isWalking;
+    public bool isWalking
+    {
+        get
+        {
+            return _isWalking;
+        }
+    }
 
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start () {
 		cc = GetComponent<CharacterController>();
         target.position = transform.position;
         originalCCHeight = cc.height;
@@ -110,9 +119,22 @@ public class Movement : MonoBehaviour {
         Speed = MovementSpeed;
     }
 
+    void ToggleWalking()
+    {
+        _isWalking = !_isWalking;
+        if (_isWalking)
+        {
+            Speed = WalkingSpeed;
+        }
+        else
+        {
+            Speed = MovementSpeed;
+        }
+    }
+
 	// Update is called once per frame
 	void FixedUpdate () {
-        if (Input.GetKeyUp(KeyCode.G)) {
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
             Move(true);
         } else {
             Move(false);
@@ -129,13 +151,9 @@ public class Movement : MonoBehaviour {
         }
 
         //TO BE REWORKED; TESTING WALKING
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
-            Speed = WalkingSpeed;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            Speed = MovementSpeed;
+            ToggleWalking();
         }
     }
 }
