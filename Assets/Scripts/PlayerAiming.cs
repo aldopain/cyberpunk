@@ -68,6 +68,8 @@ public class PlayerAiming : MonoBehaviour {
             Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition) - hit;
             vec = hit + vec.normalized * AboveGroundCrosshairHeight;
 
+            vec.y = GetComponent<Movement>().GetMiddle().y;
+
             RotationAngle = Mathf.Atan2(vec.y - transform.position.y, vec.x - transform.position.x);
 
             if (useRadialAiming)

@@ -5,13 +5,20 @@ using UnityEngine;
 public class GenericGun : MonoBehaviour {
     [Header("Gun Settings")]
     public Bullet BulletPrefab;
+    public float ShootingDelay;
+    
     [Header("Orbit Settings")]
     public Vector3 OrbitCenterOffset;
     public float OrbitingRadius;
 
+    //With this enabled, this gun won't be able to rotate by itself (thus, eliminating the need for a PlayerAiming to operate), and instead would be able to recieve rotation info from other Components
+    public bool RecieveRotation;
+    public bool RecieveShootingInputs;
+
     //Private variables
     private PlayerAiming _aim;
     private Transform _startingTransform;
+    float TimeSinceShot;
 
 	// Use this for initialization
 	void Start () {
@@ -35,19 +42,31 @@ public class GenericGun : MonoBehaviour {
         //transform.rotation = Quaternion.Euler(90, transform.rotation.y, 90);
     }
 
-    void Shoot()
+    public void Shoot()
     {
-        GameObject bullet = Instantiate(BulletPrefab.gameObject, transform.position, transform.rotation);
-        bullet.GetComponent<Bullet>().Shoot();
+        if(TimeSinceShot >= ShootingDelay)
+        {
+            GameObject bullet = Instantiate(BulletPrefab.gameObject, transform.position, transform.rotation);
+            bullet.GetComponent<Bullet>().Shoot();
+            TimeSinceShot = 0;
+        }
     }
 
 	// Update is called once per frame
 	void Update () {
-        UpdateRotation();
+        TimeSinceShot += Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0))
+        if (!RecieveRotation)
         {
-            Shoot();
+            UpdateRotation();
+        }
+
+        if (RecieveShootingInputs)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Shoot();
+            }
         }
 	}
 }
