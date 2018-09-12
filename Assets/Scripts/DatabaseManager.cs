@@ -17,7 +17,8 @@ public class DatabaseManager {
 	}
 
 	public void OpenConnection () {
-		string conn = "URI=file:" + Application.dataPath + "/" + dbName;
+		string conn = "URI=file:" + Application.dataPath + "/Databases/" + dbName;
+		Debug.Log(conn);
 		dbconn = (IDbConnection) new SqliteConnection (conn);
 		dbconn.Open ();
 	}
@@ -33,7 +34,7 @@ public class DatabaseManager {
 	}
 
 	private void CreateCommand (string sqlQuery) {
-		IDbCommand dbcmd = dbconn.CreateCommand ();
+		dbcmd = dbconn.CreateCommand ();
 		dbcmd.CommandText = sqlQuery;
 	}
 
@@ -41,13 +42,13 @@ public class DatabaseManager {
 		ArrayList result = new ArrayList();
 		IDataReader reader = dbcmd.ExecuteReader ();
 		while (reader.Read ()) {
-			//not sure in this
-			object[] bufArr = null;
+			object[] bufArr = new object[5];
 			reader.GetValues (bufArr);
-			result.AddRange (new ArrayList(bufArr));
+			result.Add (new ArrayList(bufArr));
 		}
 		reader.Close ();
 		reader = null;
+		Debug.Log (result.Count);
 		return result;
 	}
 
