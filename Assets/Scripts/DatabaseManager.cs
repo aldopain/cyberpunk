@@ -7,7 +7,7 @@ using System.Data;
 
 //i have not even tried this shit
 public class DatabaseManager {
-	public static string SELECT_ALL_COLLUMNS = "*";
+	public static string ALL_COLLUMNS = "*";
 	private IDbConnection dbconn;
 	private string dbName;
 	private IDbCommand dbcmd;
@@ -18,7 +18,6 @@ public class DatabaseManager {
 
 	public void OpenConnection () {
 		string conn = "URI=file:" + Application.dataPath + "/Databases/" + dbName;
-		Debug.Log(conn);
 		dbconn = (IDbConnection) new SqliteConnection (conn);
 		dbconn.Open ();
 	}
@@ -38,6 +37,12 @@ public class DatabaseManager {
 		dbcmd.CommandText = sqlQuery;
 	}
 
+    private void ExecuteCommand (string sqlQuery) {
+        CreateCommand (sqlQuery);
+        dbcmd.ExecuteNonQuery ();
+        DisposeCommand ();
+    }
+
 	private ArrayList Read () {
 		ArrayList result = new ArrayList();
 		IDataReader reader = dbcmd.ExecuteReader ();
@@ -48,7 +53,6 @@ public class DatabaseManager {
 		}
 		reader.Close ();
 		reader = null;
-		Debug.Log (result.Count);
 		return result;
 	}
 
@@ -58,4 +62,26 @@ public class DatabaseManager {
 		DisposeCommand ();
 		return result;
 	}
+
+    public void Insert (string tableName, ArrayList data) {
+        var bufData = "";
+        foreach (var i in data)
+            bufData += "'" + i + "', ";
+        var end = bufData.Length;
+        bufData = bufData.Remove(end - 2);
+        ExecuteCommand ("INSERT INTO " + tableName + " VALUES (" + bufData + ")");
+    }
+
+    public void InsertAll (string tableName, ArrayList data) {
+        foreach (var item in data)
+            Insert (tableName, item as ArrayList);
+    }
+
+    public void Delete (string tableName, string key, string value) {
+        ExecuteCommand ("DELETE FROM " + tableName + " WHERE " + key + "='" + value + "'");
+    }
+
+    public void DeleteAll (string tableName) {
+        ExecuteCommand ("DELETE FROM " + tableName);
+    }
 }
