@@ -22,10 +22,10 @@ public class GenericGun : MonoBehaviour {
     void UpdateRotation()
     {
         Vector3 position;
-        print(_aim.GetAngle_Rad() + "|" + _aim.GetAngle_Deg());
+        //print(_aim.GetAngle_Rad() + "|" + _aim.GetAngle_Deg());
         position.x = (_aim.transform.position.x + OrbitCenterOffset.x) + OrbitingRadius * Mathf.Cos(_aim.GetAngle_Rad());
         position.z = (_aim.transform.position.z + OrbitCenterOffset.z) + OrbitingRadius * Mathf.Sin(_aim.GetAngle_Rad());
-        position.y = OrbitCenterOffset.y;
+        position.y = _aim.transform.position.y + _aim.GetComponent<CharacterController>().bounds.extents.y + OrbitCenterOffset.y;
 
         transform.position = position;
 

@@ -14,6 +14,7 @@ public class PlayerAiming : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        _line.transform.position = Vector3.zero;
         _line.SetPosition(0, Vector3.zero);
 	}
     
@@ -56,6 +57,8 @@ public class PlayerAiming : MonoBehaviour {
 	void Update () {
         // Set the start of the line at the player position
         _line.SetPosition(0, new Vector3(transform.position.x, transform.position.y + GetComponent<CharacterController>().bounds.extents.y, transform.position.z));
+
+        print("transform.position: " + transform.position.y + "; extents " + GetComponent<CharacterController>().bounds.extents.y);
 
         Vector3 hit = mousePositionToWorld();
         
