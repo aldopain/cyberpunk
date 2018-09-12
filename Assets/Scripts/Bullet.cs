@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour {
 
     public void Shoot()
     {
-        GetComponent<Rigidbody>().velocity = ShootingVelocity * transform.up;
+        GetComponent<Rigidbody>().velocity = ShootingVelocity * transform.forward;
     }
 
     void OnTriggerEnter(Collider other)
