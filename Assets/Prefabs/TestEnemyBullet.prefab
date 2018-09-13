@@ -114,8 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShootingVelocity: 10
   Damage: 1
-  IgnoredTags:
-  - Player
+  IgnoredTags: []
 --- !u!135 &135086042756491844
 SphereCollider:
   m_ObjectHideFlags: 1
