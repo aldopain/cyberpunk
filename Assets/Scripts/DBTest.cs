@@ -19,6 +19,7 @@ public class DBTest : MonoBehaviour {
         ReadExample ();
     }
 
+    //insertAll - readAll - delete first row - readAll - delete second row - readAll
     void exampleTwo () {
         InsertAllExample ();
         Debug.Log ("All was inserted");

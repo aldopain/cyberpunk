@@ -22,7 +22,6 @@ public class GenericGun : MonoBehaviour {
     void UpdateRotation()
     {
         Vector3 position;
-        //print(_aim.GetAngle_Rad() + "|" + _aim.GetAngle_Deg());
         position.x = (_aim.transform.position.x + OrbitCenterOffset.x) + OrbitingRadius * Mathf.Cos(_aim.GetAngle_Rad());
         position.z = (_aim.transform.position.z + OrbitCenterOffset.z) + OrbitingRadius * Mathf.Sin(_aim.GetAngle_Rad());
         position.y = _aim.transform.position.y + _aim.GetComponent<CharacterController>().bounds.extents.y + OrbitCenterOffset.y;
@@ -30,9 +29,7 @@ public class GenericGun : MonoBehaviour {
         transform.position = position;
 
         // -90 fixes non-matching coordiantion systems of Blender and Unity. 
-        //transform.rotation = Quaternion.Euler(-90, -_aim.GetAngle_Deg(), -90);
         transform.LookAt(_aim._crosshair.transform);
-        //transform.rotation = Quaternion.Euler(90, transform.rotation.y, 90);
     }
 
     void Shoot()

@@ -5,7 +5,6 @@ using Mono.Data.Sqlite;
 using System;
 using System.Data;
 
-//i have not even tried this shit
 public class DatabaseManager {
 	public static string ALL_COLLUMNS = "*";
 	private IDbConnection dbconn;
