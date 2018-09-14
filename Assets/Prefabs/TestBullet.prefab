@@ -116,6 +116,7 @@ MonoBehaviour:
   Damage: 1
   IgnoredTags:
   - Player
+  - Triggers
 --- !u!135 &135966250394171508
 SphereCollider:
   m_ObjectHideFlags: 1
