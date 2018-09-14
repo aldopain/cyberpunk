@@ -19,17 +19,7 @@ public class PlayerAiming : MonoBehaviour {
         _line.transform.position = Vector3.zero;
         _line.SetPosition(0, Vector3.zero);
         heightOffset = new Vector3 (0.989949f, 1f, 1.02813133f);
-        //heightOffset = new Vector3 (1.427f, 1f, 0.027f);
 	}
-    
-    // This converts mouse position to world coordinates
-    // Vector3 mousePositionToWorld(){
-    //     RaycastHit mouse;
-    //     if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mouse))
-    //         return mouse.point;
-    //     else
-    //         return Vector3.zero;
-    // }
 
     Vector3 GetPositionOnCircle(Vector3 pos)
     {
@@ -58,16 +48,28 @@ public class PlayerAiming : MonoBehaviour {
     }
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         // Set the start of the line at the player position
-        _line.SetPosition(0, new Vector3(transform.position.x, transform.position.y + GetComponent<CharacterController>().bounds.extents.y, transform.position.z));
+        var height = transform.position.y + GetComponent<CharacterController>().bounds.extents.y;
+        var fixedPlayerPosition = new Vector3(transform.position.x, height, transform.position.z);
 
-        _crosshair.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        _line.SetPosition(0, fixedPlayerPosition);
 
-        var diff = _crosshair.transform.position.y - (transform.position.y + GetComponent<CharacterController>().bounds.extents.y);
+        var mousePositionInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        target = _crosshair.transform.position - diff * heightOffset;
+        var diff = mousePositionInWorld.y - height;
 
-        _line.SetPosition(1, target);
+        target = mousePositionInWorld - diff * heightOffset;
+
+        RaycastHit rh;
+        Ray ray = new Ray(fixedPlayerPosition, target - fixedPlayerPosition);
+
+        if (Physics.Raycast (ray, out rh, AimingDistance)) {
+            _crosshair.transform.position = rh.point;
+        } else {
+            _crosshair.transform.position = fixedPlayerPosition + AimingDistance * (target - fixedPlayerPosition).normalized;
+        }
+
+        _line.SetPosition(1, _crosshair.transform.position);
     }
 }
