@@ -35,9 +35,9 @@ public class PlayerAiming : MonoBehaviour {
     {
         Vector3 targetPos;
 
-        target.x = transform.position.x + AimingDistance * Mathf.Cos(RotationAngle);
-        target.z = transform.position.z + AimingDistance * Mathf.Sin(RotationAngle);
-        target.y = 0;
+        targetPos.x = transform.position.x + AimingDistance * Mathf.Cos(RotationAngle);
+        targetPos.z = transform.position.z + AimingDistance * Mathf.Sin(RotationAngle);
+        targetPos.y = 0;
 
         return targetPos;
     }
