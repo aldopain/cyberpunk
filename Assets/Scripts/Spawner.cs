@@ -36,7 +36,7 @@ public class Spawner : MonoBehaviour {
 
     public void Spawn()
     {
-        if(objectsSpawned < SpawnLimit)
+        if(objectsSpawned < SpawnLimit && SpawnLimit > 0)
         {
             GameObject spawnedObject = Instantiate(ObjectPrefab, transform.position, transform.rotation);
             objectsSpawned++;
