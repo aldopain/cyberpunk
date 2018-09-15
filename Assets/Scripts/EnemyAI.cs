@@ -34,7 +34,6 @@ public class EnemyAI : MonoBehaviour {
 
         if (hit.collider != null)
         {
-            print(name + " hit a collider " + hit.transform.name);
             if (hit.transform.name == "Player")
             {
                 AttachedGun.Shoot();

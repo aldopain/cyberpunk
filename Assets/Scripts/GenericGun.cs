@@ -8,7 +8,6 @@ public class GenericGun : MonoBehaviour {
     public float ShootingDelay;
     
     [Header("Orbit Settings")]
-    public Vector3 OrbitCenterOffset;
     public float OrbitingRadius;
 
     //With this enabled, this gun won't be able to rotate by itself (thus, eliminating the need for a PlayerAiming to operate), and instead would be able to recieve rotation info from other Components
@@ -28,18 +27,13 @@ public class GenericGun : MonoBehaviour {
 
     void UpdateRotation()
     {
-        Vector3 position;
-        //print(_aim.GetAngle_Rad() + "|" + _aim.GetAngle_Deg());
-        position.x = (_aim.transform.position.x + OrbitCenterOffset.x) + OrbitingRadius * Mathf.Cos(_aim.GetAngle_Rad());
-        position.z = (_aim.transform.position.z + OrbitCenterOffset.z) + OrbitingRadius * Mathf.Sin(_aim.GetAngle_Rad());
-        position.y = _aim.transform.position.y + _aim.GetComponent<CharacterController>().bounds.extents.y + OrbitCenterOffset.y;
+        Vector3 player = new Vector3 (_aim.transform.position.x, _aim.transform.position.y + _aim.GetComponent<CharacterController>().bounds.extents.y, _aim.transform.position.z);
 
-        transform.position = position;
+        Vector3 target = _aim.GetComponent<PlayerAiming>().GetTargetPosition();
 
-        // -90 fixes non-matching coordiantion systems of Blender and Unity. 
-        //transform.rotation = Quaternion.Euler(-90, -_aim.GetAngle_Deg(), -90);
+        transform.position = player + OrbitingRadius * (target - player).normalized;
+
         transform.LookAt(_aim._crosshair.transform);
-        //transform.rotation = Quaternion.Euler(90, transform.rotation.y, 90);
     }
 
     public void Shoot()
