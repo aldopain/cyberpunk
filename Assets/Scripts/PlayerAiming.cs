@@ -8,18 +8,16 @@ public class PlayerAiming : MonoBehaviour {
     public LineRenderer _line;
     public bool useRadialAiming;
     public float AimingDistance;
+    public float AboveGroundCrosshairHeight = 1f;
     public Vector3 heightOffset;
     private Vector3 target;
 
     private float RotationAngle;
 
-    private GameObject _gun;
-
 	// Use this for initialization
 	void Start () {
         _line.transform.position = Vector3.zero;
         _line.SetPosition(0, Vector3.zero);
-        _gun = GameObject.Find ("TestGun");
         heightOffset = new Vector3 (0.989949f, 1f, 1.02813133f);
 	}
 
@@ -48,17 +46,14 @@ public class PlayerAiming : MonoBehaviour {
     {
         return _crosshair.transform.position;
     }
-    public Vector3 GetTargetPosition() {
-        return target;
-    }
 
 	// Update is called once per frame
 	void FixedUpdate () {
         // Set the start of the line at the player position
         var height = transform.position.y + GetComponent<CharacterController>().bounds.extents.y;
-        var GunPosition = _gun.transform.position;
+        var fixedPlayerPosition = new Vector3(transform.position.x, height, transform.position.z);
 
-        _line.SetPosition(0, GunPosition);
+        _line.SetPosition(0, fixedPlayerPosition);
 
         var mousePositionInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -66,17 +61,13 @@ public class PlayerAiming : MonoBehaviour {
 
         target = mousePositionInWorld - diff * heightOffset;
 
-        RotationAngle = Mathf.Atan2(target.y - transform.position.y, target.x - transform.position.x);
-
-        //transform.position = target;
-
         RaycastHit rh;
-        Ray ray = new Ray(GunPosition, target - GunPosition);
+        Ray ray = new Ray(fixedPlayerPosition, target - fixedPlayerPosition);
 
         if (Physics.Raycast (ray, out rh, AimingDistance)) {
             _crosshair.transform.position = rh.point;
         } else {
-            _crosshair.transform.position = GunPosition + AimingDistance * (target - GunPosition).normalized;
+            _crosshair.transform.position = fixedPlayerPosition + AimingDistance * (target - fixedPlayerPosition).normalized;
         }
 
         _line.SetPosition(1, _crosshair.transform.position);

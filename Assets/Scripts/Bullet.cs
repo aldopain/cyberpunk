@@ -38,8 +38,10 @@ public class Bullet : MonoBehaviour {
     {
         if (!isIgnoredTag(other.tag))
         {
+            print("Collided With " + other.name);
             if (other.GetComponent<HealthController>() != null)
             {
+                print(other.name + " has a health");
                 other.GetComponent<HealthController>().ChangeHealth(-Mathf.Abs(Damage));
             }
 
