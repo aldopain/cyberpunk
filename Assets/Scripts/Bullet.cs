@@ -6,15 +6,22 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
     public float ShootingVelocity;
     public int Damage;
+    public float Range;
     public string[] IgnoredTags;
+
+    private Vector3 StartPosition;
 	// Use this for initialization
 	void Start () {
-		
+		StartPosition = transform.position;
+        print (StartPosition);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Vector3.Distance(transform.position, StartPosition) >= Range) {
+            print (transform.position);
+            Destroy (this.gameObject);
+        }
 	}
 
     public void Shoot()

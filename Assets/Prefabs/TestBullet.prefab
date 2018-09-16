@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 135966250394171508}
   - component: {fileID: 54376855514396186}
   - component: {fileID: 114353970986411988}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TestBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,6 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShootingVelocity: 10
   Damage: 1
+  Range: 2
   IgnoredTags:
   - Player
   - Triggers
