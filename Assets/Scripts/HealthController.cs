@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HealthController : MonoBehaviour {
     [Header("Settings")]
@@ -10,6 +11,7 @@ public class HealthController : MonoBehaviour {
     private int CurrentHealth;
     public bool StartWithCustomHealth;
 
+    public UnityEvent OnDeath;
     private bool _isDead;
 	// Use this for initialization
 	void Start () {
@@ -22,6 +24,10 @@ public class HealthController : MonoBehaviour {
     void Death()
     {
         _isDead = true;
+        OnDeath.Invoke();
+
+        //TO BE REPLACED WITH ACTUAL DEATH
+        gameObject.SetActive(false);
     }
 
     public int GetMaxHealth()

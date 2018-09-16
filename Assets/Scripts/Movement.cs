@@ -156,4 +156,9 @@ public class Movement : MonoBehaviour {
             ToggleWalking();
         }
     }
+
+    public Vector3 GetMiddle()
+    {
+        return new Vector3(transform.position.x, transform.position.y + cc.bounds.extents.y, transform.position.z);
+    }
 }
