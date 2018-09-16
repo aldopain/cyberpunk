@@ -81,7 +81,6 @@ public class Movement : MonoBehaviour {
 			transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 90, transform.eulerAngles.z);
 
             var dash = isDashing ? dashMultiply : 1;
-            Debug.Log(direction * Time.deltaTime * Speed * dash);
 			cc.Move(direction * Time.deltaTime * Speed * dash);
 		}
 	}
