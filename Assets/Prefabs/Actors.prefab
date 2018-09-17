@@ -543,6 +543,8 @@ GameObject:
   - component: {fileID: 114902786693122928}
   - component: {fileID: 114061206668781870}
   - component: {fileID: 114719082517700762}
+  - component: {fileID: 114668993559682008}
+  - component: {fileID: 114864437873787416}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2135,6 +2137,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ed60f5a781de040a0087cac15197e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114668993559682008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1908573915898912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14a38c79430945d45b79038d84c92dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Text: Aiming Distance _PlayerAiming.AimingDistance_ ; *HealthController.GetHealth*
 --- !u!114 &114719082517700762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2150,6 +2164,25 @@ MonoBehaviour:
   SelectedThrowableObject: {fileID: 1846842729138292, guid: 56bc1bf0831df2f459dabccbd4ef1ac3,
     type: 2}
   RecieveInput: 1
+--- !u!114 &114864437873787416
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1908573915898912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d901d5e3fe9ed9c4ba6199e5dae5cde8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 10
+  CurrentHealth: 10
+  StartWithCustomHealth: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114902786693122928
 MonoBehaviour:
   m_ObjectHideFlags: 1
