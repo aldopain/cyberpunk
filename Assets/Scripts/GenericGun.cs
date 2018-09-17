@@ -104,6 +104,8 @@ public class GenericGun : MonoBehaviour {
 
         if (RecieveShootingInputs)
         {
+
+            //Shooting
             if (CurrentFireMode == FireMode.Single)
             {
                 if (Input.GetMouseButtonDown(0))
@@ -118,6 +120,7 @@ public class GenericGun : MonoBehaviour {
                 }
             }
 
+            //Other interactions
             if (Input.GetKeyDown(KeyCode.R))
             {
                 StartCoroutine(Reload());
