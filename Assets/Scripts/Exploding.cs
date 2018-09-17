@@ -28,6 +28,9 @@ public class Exploding : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        Explode ();
+        if (enabled)
+        {
+            Explode();
+        }      
     }
 }
