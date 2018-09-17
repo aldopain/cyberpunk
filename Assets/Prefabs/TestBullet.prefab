@@ -114,7 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShootingVelocity: 10
   Damage: 1
-  Range: 2
+  Range: 4
   IgnoredTags:
   - Player
   - Triggers

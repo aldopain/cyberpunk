@@ -2913,6 +2913,11 @@ Prefab:
       propertyPath: dashMultiply
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 136691209166942706, guid: 27b2ef822ca95744da9e77ef75d164c7,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27b2ef822ca95744da9e77ef75d164c7, type: 2}
   m_IsPrefabAsset: 0
