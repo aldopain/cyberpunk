@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour {
     public float Range;
     public float Accuracy;
     public string[] IgnoredTags;
-    public string[] TransmittedComponents;
+
     private Vector3 StartPosition;
 	// Use this for initialization
 	void Start () {
@@ -46,19 +46,10 @@ public class Bullet : MonoBehaviour {
             if (other.GetComponent<HealthController>() != null)
             {
                 other.GetComponent<HealthController>().ChangeHealth(-Mathf.Abs(Damage));
-                TransmitComponents(other.gameObject);
             }
 
             Destroy(gameObject);
         }
-    }
 
-    void TransmitComponents(GameObject other)
-    {
-        foreach (string s in TransmittedComponents)
-        {
-            System.Type type = System.Type.GetType(s);
-            other.AddComponent(type);
-        }
     }
 }
