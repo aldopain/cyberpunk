@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour {
     public float Range;
     public float Accuracy;
     public string[] IgnoredTags;
-
+    
     private Vector3 StartPosition;
 	// Use this for initialization
 	void Start () {
