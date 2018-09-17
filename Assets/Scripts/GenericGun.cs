@@ -6,6 +6,8 @@ public class GenericGun : MonoBehaviour {
     [Header("Gun Settings")]
     public Bullet BulletPrefab;
     public float ShootingDelay;
+    public int MaxMagazineCapacity;
+    public float ReloadTime;
     
     [Header("Orbit Settings")]
     public Vector3 OrbitCenterOffset;
@@ -15,13 +17,17 @@ public class GenericGun : MonoBehaviour {
     public bool RecieveRotation;
     public bool RecieveShootingInputs;
 
+
     //Private variables
     private PlayerAiming _aim;
     private Transform _startingTransform;
+    private bool isReloading;
+    private int CurrentMagazineCapacity;
     float TimeSinceShot;
 
 	// Use this for initialization
 	void Start () {
+        CurrentMagazineCapacity = MaxMagazineCapacity;
         _aim = GameObject.Find("Player").GetComponent<PlayerAiming>();
         _startingTransform = transform;
 	}
@@ -39,12 +45,23 @@ public class GenericGun : MonoBehaviour {
 
     public void Shoot()
     {
-        if(TimeSinceShot >= ShootingDelay)
-        {
+        if (!isReloading && CurrentMagazineCapacity > 0 && TimeSinceShot >= ShootingDelay) {
+            CurrentMagazineCapacity--;
             GameObject bullet = Instantiate(BulletPrefab.gameObject, transform.position, transform.rotation);
             bullet.GetComponent<Bullet>().Shoot();
             TimeSinceShot = 0;
+        } else if (!isReloading) {
+            StartCoroutine(Reload());
+        } else {
+            //add here some animation to show player that he is still reloading
         }
+    }
+
+    IEnumerator Reload () {
+        isReloading = true;
+        yield return new WaitForSeconds(ReloadTime);
+        CurrentMagazineCapacity = MaxMagazineCapacity; //fix when add inventory
+        isReloading = false;
     }
 
 	// Update is called once per frame
