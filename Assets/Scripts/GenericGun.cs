@@ -79,6 +79,11 @@ public class GenericGun : MonoBehaviour {
             {
                 Shoot();
             }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                StartCoroutine(Reload());
+            }
         }
 	}
 }
