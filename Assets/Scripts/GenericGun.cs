@@ -8,7 +8,8 @@ public class GenericGun : MonoBehaviour {
     public float ShootingDelay;
     public int MaxMagazineCapacity;
     public float ReloadTime;
-    
+    public bool isSemiAuto;
+
     [Header("Orbit Settings")]
     public Vector3 OrbitCenterOffset;
     public float OrbitingRadius;
@@ -45,11 +46,14 @@ public class GenericGun : MonoBehaviour {
 
     public void Shoot()
     {
-        if (!isReloading && CurrentMagazineCapacity > 0 && TimeSinceShot >= ShootingDelay) {
-            CurrentMagazineCapacity--;
-            GameObject bullet = Instantiate(BulletPrefab.gameObject, transform.position, transform.rotation);
-            bullet.GetComponent<Bullet>().Shoot();
-            TimeSinceShot = 0;
+        if (!isReloading && CurrentMagazineCapacity > 0) {
+            if(TimeSinceShot >= ShootingDelay)
+            {
+                CurrentMagazineCapacity--;
+                GameObject bullet = Instantiate(BulletPrefab.gameObject, transform.position, transform.rotation);
+                bullet.GetComponent<Bullet>().Shoot();
+                TimeSinceShot = 0;
+            }
         } else if (!isReloading) {
             StartCoroutine(Reload());
         } else {
@@ -75,9 +79,18 @@ public class GenericGun : MonoBehaviour {
 
         if (RecieveShootingInputs)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (isSemiAuto)
             {
-                Shoot();
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Shoot();
+                }
+            }else
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    Shoot();
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.R))

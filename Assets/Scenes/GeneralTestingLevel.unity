@@ -2781,6 +2781,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114171780843210312, guid: 27b2ef822ca95744da9e77ef75d164c7,
+        type: 2}
+      propertyPath: ShootingDelay
+      value: 0.15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27b2ef822ca95744da9e77ef75d164c7, type: 2}
   m_IsPrefabAsset: 0
