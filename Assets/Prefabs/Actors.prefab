@@ -2115,9 +2115,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 114353970986411988, guid: 7bdd0197f71398c4e9ae6e50515f997b,
     type: 2}
-  ShootingDelay: 0
+  ShootingDelay: 0.15
   MaxMagazineCapacity: 30
   ReloadTime: 1.5
+  CurrentFireMode: 0
+  BurstShotsCount: 3
   OrbitCenterOffset: {x: 0, y: 0, z: 0}
   OrbitingRadius: 0.15
   RecieveRotation: 0

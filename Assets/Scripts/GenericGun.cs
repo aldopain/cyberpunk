@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GenericGun : MonoBehaviour {
+    public enum FireMode
+    {
+        FullAuto,
+        Single,
+        Burst
+    }
+
     [Header("Gun Settings")]
     public Bullet BulletPrefab;
     public float ShootingDelay;
     public int MaxMagazineCapacity;
     public float ReloadTime;
-    public bool isSemiAuto;
+    public FireMode CurrentFireMode;
+    public int BurstShotsCount;
 
     [Header("Orbit Settings")]
     public Vector3 OrbitCenterOffset;
@@ -25,6 +33,7 @@ public class GenericGun : MonoBehaviour {
     private bool isReloading;
     private int CurrentMagazineCapacity;
     float TimeSinceShot;
+    int consecutiveShotsFired;
 
 	// Use this for initialization
 	void Start () {
@@ -47,12 +56,16 @@ public class GenericGun : MonoBehaviour {
     public void Shoot()
     {
         if (!isReloading && CurrentMagazineCapacity > 0) {
-            if(TimeSinceShot >= ShootingDelay)
+            if(consecutiveShotsFired < BurstShotsCount || !(CurrentFireMode == FireMode.Burst))
             {
-                CurrentMagazineCapacity--;
-                GameObject bullet = Instantiate(BulletPrefab.gameObject, transform.position, transform.rotation);
-                bullet.GetComponent<Bullet>().Shoot();
-                TimeSinceShot = 0;
+                if (TimeSinceShot >= ShootingDelay)
+                {
+                    CurrentMagazineCapacity--;
+                    GameObject bullet = Instantiate(BulletPrefab.gameObject, transform.position, transform.rotation);
+                    bullet.GetComponent<Bullet>().Shoot();
+                    TimeSinceShot = 0;
+                    consecutiveShotsFired++;
+                }
             }
         } else if (!isReloading) {
             StartCoroutine(Reload());
@@ -66,6 +79,18 @@ public class GenericGun : MonoBehaviour {
         yield return new WaitForSeconds(ReloadTime);
         CurrentMagazineCapacity = MaxMagazineCapacity; //fix when add inventory
         isReloading = false;
+        consecutiveShotsFired = 0;
+    }
+
+    void FiremodeSwitch()
+    {
+        if((int)CurrentFireMode == System.Enum.GetNames(typeof(FireMode)).Length - 1)
+        {
+            CurrentFireMode = 0;
+        }else
+        {
+            CurrentFireMode++;
+        }
     }
 
 	// Update is called once per frame
@@ -79,7 +104,7 @@ public class GenericGun : MonoBehaviour {
 
         if (RecieveShootingInputs)
         {
-            if (isSemiAuto)
+            if (CurrentFireMode == FireMode.Single)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -96,6 +121,16 @@ public class GenericGun : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.R))
             {
                 StartCoroutine(Reload());
+            }
+
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                FiremodeSwitch();
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                consecutiveShotsFired = 0;
             }
         }
 	}
