@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 135966250394171508}
   - component: {fileID: 54376855514396186}
   - component: {fileID: 114353970986411988}
+  - component: {fileID: 114457165574121306}
   m_Layer: 2
   m_Name: TestBullet
   m_TagString: Untagged
@@ -115,9 +116,24 @@ MonoBehaviour:
   ShootingVelocity: 10
   Damage: 1
   Range: 4
+  Accuracy: 0
   IgnoredTags:
   - Player
   - Triggers
+--- !u!114 &114457165574121306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1712176778354492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b2cde320838c6c47a9b6d63bff5be5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CenterOffset: {x: 0, y: 0, z: 0}
+  Radius: 1000
+  Damage: 10
 --- !u!135 &135966250394171508
 SphereCollider:
   m_ObjectHideFlags: 1
