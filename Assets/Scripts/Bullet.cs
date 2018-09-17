@@ -7,12 +7,13 @@ public class Bullet : MonoBehaviour {
     public float ShootingVelocity;
     public int Damage;
     public float Range;
-    public float AngleDeflectionAbs;
+    public float Accuracy;
     public string[] IgnoredTags;
-    public float ParalizeTime;
 
+    private Vector3 StartPosition;
 	// Use this for initialization
 	void Start () {
+		StartPosition = transform.position;
         Destroy (this.gameObject, Range / ShootingVelocity);
 	}
 	
@@ -23,7 +24,6 @@ public class Bullet : MonoBehaviour {
 
     public void Shoot()
     {
-        transform.Rotate (new Vector3 (0, Random.Range(-AngleDeflectionAbs, AngleDeflectionAbs), 0));
         GetComponent<Rigidbody>().velocity = ShootingVelocity * transform.forward;
     }
 
