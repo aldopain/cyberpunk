@@ -4,6 +4,13 @@ public class Exploding : MonoBehaviour {
     public Vector3 CenterOffset;
     public float Radius;
     public int Damage;
+    public float ExplosionTimeout;
+
+    private void Start() {
+        if (ExplosionTimeout > 0) {
+            Destroy (gameObject, ExplosionTimeout);
+        }
+    }
 
     public void Explode () {
         var Center = transform.position + CenterOffset;

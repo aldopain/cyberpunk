@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1495,6 +1495,26 @@ Transform:
   m_Father: {fileID: 1103078273}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1013349615 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1908573915898912, guid: 27b2ef822ca95744da9e77ef75d164c7,
+    type: 2}
+  m_PrefabInternal: {fileID: 1968589606}
+--- !u!114 &1013349617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1013349615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b38c7a196984840b4de976a0ae7559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firingAngle: 45
+  SelectedThrowableObject: {fileID: 1846842729138292, guid: 56bc1bf0831df2f459dabccbd4ef1ac3,
+    type: 2}
+  RecieveInput: 1
 --- !u!1 &1068867286
 GameObject:
   m_ObjectHideFlags: 0
@@ -2918,7 +2938,13 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114061206668781870, guid: 27b2ef822ca95744da9e77ef75d164c7,
+        type: 2}
+      propertyPath: AimingDistance
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114979637610966502, guid: 27b2ef822ca95744da9e77ef75d164c7, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 27b2ef822ca95744da9e77ef75d164c7, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1001 &2030158361
