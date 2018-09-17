@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public class Bullet : MonoBehaviour {
+public class Bullet : MonoBehaviour
+{
     public float ShootingVelocity;
     public int Damage;
     public float Range;
@@ -12,16 +13,18 @@ public class Bullet : MonoBehaviour {
     public string[] TransmittedComponents;
 
     private Vector3 StartPosition;
-	// Use this for initialization
-	void Start () {
-		StartPosition = transform.position;
-        Destroy (this.gameObject, Range / ShootingVelocity);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Use this for initialization
+    void Start()
+    {
+        StartPosition = transform.position;
+        Destroy(this.gameObject, Range / ShootingVelocity);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     public void Shoot()
     {
@@ -30,9 +33,9 @@ public class Bullet : MonoBehaviour {
 
     bool isIgnoredTag(string s)
     {
-        foreach(string tag in IgnoredTags)
+        foreach (string tag in IgnoredTags)
         {
-            if(s == tag)
+            if (s == tag)
             {
                 return true;
             }
@@ -63,3 +66,4 @@ public class Bullet : MonoBehaviour {
             other.AddComponent(type);
         }
     }
+}
