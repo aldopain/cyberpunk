@@ -113,14 +113,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShootingVelocity: 3
-  Damage: 1
+  Damage: 0
   Range: 7
-  AngleDeflectionAbs: 20
+  AngleDeflectionAbs: 40
   IgnoredTags:
   - Player
   - Triggers
   - Bullet
-  TransmittedComponents: []
+  TransmittedComponents:
+  - Flame
 --- !u!135 &135226245471018270
 SphereCollider:
   m_ObjectHideFlags: 1
