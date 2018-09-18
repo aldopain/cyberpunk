@@ -42,6 +42,15 @@ public class GenericGun : MonoBehaviour {
         if(TimeSinceShot >= ShootingDelay)
         {
             GameObject bullet = Instantiate(BulletPrefab.gameObject, transform.position, transform.rotation);
+            /* говнокод (
+            foreach (GenericMutator a in GetComponents<GenericMutator>())//!TODO add it to prefub!
+            {
+                Debug.Log(a.GetType());
+                GenericMutator b = bullet.AddComponent(a.GetType()) as GenericMutator;
+                //Debug.Log(b.GetType());
+                b.Replicate(a);
+            }*/
+
             bullet.GetComponent<Bullet>().Shoot();
             TimeSinceShot = 0;
         }
@@ -58,7 +67,7 @@ public class GenericGun : MonoBehaviour {
 
         if (RecieveShootingInputs)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
                 Shoot();
             }

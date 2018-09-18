@@ -11,20 +11,44 @@ public class Bullet : MonoBehaviour {
     public string[] IgnoredTags;
 
     private Vector3 StartPosition;
+
+    [HideInInspector]
+    public Vector3 Shift;
 	// Use this for initialization
 	void Start () {
 		StartPosition = transform.position;
         Destroy (this.gameObject, Range / ShootingVelocity);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        foreach (GenericMutator mutator in GetComponents<GenericMutator>())
+        {
+            mutator.onStart();
+        }
+    }
+
+    // Update is called once per frame
+    //TODO!: При создании сделать список на апдейт что бы не перебирать всегда все мутаторы
+    void Update () {
+        foreach (GenericMutator mutator in GetComponents<GenericMutator>())
+        {
+            mutator.onUpdate();
+        }
+    }
+
+    
 
     public void Shoot()
     {
-        GetComponent<Rigidbody>().velocity = ShootingVelocity * transform.forward;
+        foreach (GenericMutator mutator in GetComponents<GenericMutator>())
+        {
+            mutator.onShot();
+        }
+        ShootFly();//Тут говно код, потому что зависает почему то..
+
+
+    }
+
+    public void ShootFly()
+    {
+        GetComponent<Rigidbody>().velocity = ShootingVelocity * (transform.forward + Shift);
     }
 
     bool isIgnoredTag(string s)
@@ -43,12 +67,13 @@ public class Bullet : MonoBehaviour {
     {
         if (!isIgnoredTag(other.tag))
         {
-            if (other.GetComponent<HealthController>() != null)
+            foreach (GenericMutator mutator in GetComponents<GenericMutator>())
             {
-                other.GetComponent<HealthController>().ChangeHealth(-Mathf.Abs(Damage));
+                mutator.onHit(other);
             }
-
-            Destroy(gameObject);
+            //Destroy(gameObject); // Для огнемета
+            float Spread = 0.1f;
+            GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-Spread, Spread), Random.Range(-Spread, Spread), Random.Range(-Spread, Spread));
         }
 
     }
