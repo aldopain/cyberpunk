@@ -15,7 +15,6 @@ public class ThrowableObject : MonoBehaviour {
     }
 
     public void Throw (Vector3 TargetPosition, float FiringAngle) {
-        print ("KEK");
         StartCoroutine (SimulateProjectile(TargetPosition, FiringAngle, new Vector3 (0f, 0f, 0f)));
     }
 

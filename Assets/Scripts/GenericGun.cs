@@ -17,6 +17,7 @@ public class GenericGun : MonoBehaviour {
     public float ReloadTime;
     public FireMode CurrentFireMode;
     public int BurstShotsCount;
+    public int BulletsPerShot;
 
     [Header("Orbit Settings")]
     public Vector3 OrbitCenterOffset;
@@ -61,10 +62,12 @@ public class GenericGun : MonoBehaviour {
                 if (TimeSinceShot >= ShootingDelay)
                 {
                     CurrentMagazineCapacity--;
-                    GameObject bullet = Instantiate(BulletPrefab.gameObject, transform.position, transform.rotation);
-                    bullet.GetComponent<Bullet>().Shoot();
                     TimeSinceShot = 0;
                     consecutiveShotsFired++;
+                    for (int i = 0; i < BulletsPerShot; i++) {
+                        GameObject bullet = Instantiate(BulletPrefab.gameObject, transform.position, transform.rotation);
+                        bullet.GetComponent<Bullet>().Shoot();
+                    }
                 }
             }
         } else if (!isReloading) {
@@ -72,6 +75,10 @@ public class GenericGun : MonoBehaviour {
         } else {
             //add here some animation to show player that he is still reloading
         }
+    }
+
+    public float GetRange () {
+        return BulletPrefab != null ? BulletPrefab.Range : 0;
     }
 
     IEnumerator Reload () {

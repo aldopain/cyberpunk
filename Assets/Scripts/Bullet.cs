@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     public float ShootingVelocity;
     public int Damage;
     public float Range;
-    public float Accuracy;
+    public float AngleDeflectionAbs;
     public string[] IgnoredTags;
     public string[] TransmittedComponents;
 
@@ -28,6 +28,7 @@ public class Bullet : MonoBehaviour
 
     public void Shoot()
     {
+        transform.Rotate (new Vector3 (0, Random.Range(-AngleDeflectionAbs, AngleDeflectionAbs), 0));
         GetComponent<Rigidbody>().velocity = ShootingVelocity * transform.forward;
     }
 

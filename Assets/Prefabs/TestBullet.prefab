@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114457165574121306}
   m_Layer: 2
   m_Name: TestBullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,10 +116,11 @@ MonoBehaviour:
   ShootingVelocity: 10
   Damage: 1
   Range: 4
-  Accuracy: 0
+  AngleDeflectionAbs: 20
   IgnoredTags:
   - Player
   - Triggers
+  - Bullet
   TransmittedComponents: []
 --- !u!114 &114457165574121306
 MonoBehaviour:
