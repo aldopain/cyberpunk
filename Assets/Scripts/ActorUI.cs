@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
+using TMPro;
 
 public class ActorUI : MonoBehaviour {
     //Example of a string: Player's Max Ammo is _GenericGun.MaxMagazineCapacity_; Player's health is *HealthController.GetHealth*
@@ -9,6 +10,7 @@ public class ActorUI : MonoBehaviour {
     //public GameObject[] UsedObjects;
     public string Text;
     string formattedText;
+    public TMP_Text Output;
 	// Use this for initialization
 	void Start () {
         UpdateUI();
@@ -102,5 +104,9 @@ public class ActorUI : MonoBehaviour {
 
             firstPass = false;
         }
+
+        Output.text = formattedText;
+
+        
     }
 }
