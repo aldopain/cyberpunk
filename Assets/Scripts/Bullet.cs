@@ -71,9 +71,9 @@ public class Bullet : MonoBehaviour {
             {
                 mutator.onHit(other);
             }
-            //Destroy(gameObject); // Для огнемета
-            float Spread = 0.1f;
-            GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-Spread, Spread), Random.Range(-Spread, Spread), Random.Range(-Spread, Spread));
+            Destroy(gameObject); 
+            //float Spread = 0.1f;
+            //GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-Spread, Spread), Random.Range(-Spread, Spread), Random.Range(-Spread, Spread));
         }
 
     }

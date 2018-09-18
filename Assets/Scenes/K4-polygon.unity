@@ -4518,7 +4518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 114181338987999324, guid: d9f3df792304ccd4cb6e23a064b43c2f,
     type: 2}
-  ShootingDelay: 0.03
+  ShootingDelay: 0.5
   OrbitCenterOffset: {x: 0, y: 0, z: 0}
   OrbitingRadius: 0.15
   RecieveRotation: 0
