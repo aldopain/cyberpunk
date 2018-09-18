@@ -8,34 +8,34 @@ public class PlayerAiming : MonoBehaviour {
     public LineRenderer _line;
     public bool useRadialAiming;
     public float AimingDistance;
-    public float AboveGroundCrosshairHeight = 1f;
+    public Vector3 heightOffset;
+    private Vector3 target;
 
     private float RotationAngle;
+
+    private GameObject _gun;
 
 	// Use this for initialization
 	void Start () {
         _line.transform.position = Vector3.zero;
         _line.SetPosition(0, Vector3.zero);
+        heightOffset = new Vector3 (0.989949f, 1f, 1.02813133f);
+        _gun = GameObject.Find ("TestGun"); 
 	}
-    
-    // This converts mouse position to world coordinates
-    Vector3 mousePositionToWorld(){
-        RaycastHit mouse;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mouse))
-            return mouse.point;
-        else
-            return Vector3.zero;
+
+    public Vector3 GetTargetPosition() { 
+        return target; 
     }
 
     Vector3 GetPositionOnCircle(Vector3 pos)
     {
-        Vector3 crosshairPos;
+        Vector3 targetPos;
 
-        crosshairPos.x = transform.position.x + AimingDistance * Mathf.Cos(RotationAngle);
-        crosshairPos.z = transform.position.z + AimingDistance * Mathf.Sin(RotationAngle);
-        crosshairPos.y = 0;
+        targetPos.x = transform.position.x + AimingDistance * Mathf.Cos(RotationAngle);
+        targetPos.z = transform.position.z + AimingDistance * Mathf.Sin(RotationAngle);
+        targetPos.y = 0;
 
-        return crosshairPos;
+        return targetPos;
     }
 
     public float GetAngle_Rad()
@@ -54,32 +54,30 @@ public class PlayerAiming : MonoBehaviour {
     }
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         // Set the start of the line at the player position
-        _line.SetPosition(0, new Vector3(transform.position.x, transform.position.y + GetComponent<CharacterController>().bounds.extents.y, transform.position.z));
+        var height = transform.position.y + GetComponent<CharacterController>().bounds.extents.y;
+        var GunPosition = _gun.transform.position;
 
-        print("transform.position: " + transform.position.y + "; extents " + GetComponent<CharacterController>().bounds.extents.y);
+        _line.SetPosition(0, GunPosition);
 
-        Vector3 hit = mousePositionToWorld();
-        
-        //if mousePositionToWorld() returned not a Vector3.zero, then calculate crosshair.position
-        //else do nothing
-        if (!hit.Equals(Vector3.zero)) {
-            Vector3 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition) - hit;
-            vec = hit + vec.normalized * AboveGroundCrosshairHeight;
+        var mousePositionInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            RotationAngle = Mathf.Atan2(vec.y - transform.position.y, vec.x - transform.position.x);
+        var diff = mousePositionInWorld.y - height;
 
-            if (useRadialAiming)
-            {
-                _crosshair.transform.position = GetPositionOnCircle(vec);
-            }
-            else
-            {
-                _crosshair.transform.position = vec;
-            }
+        target = mousePositionInWorld - diff * heightOffset;
 
-            _line.SetPosition(1, _crosshair.transform.position);
+        RotationAngle = Mathf.Atan2(target.y - transform.position.y, target.x - transform.position.x); 
+
+        RaycastHit rh;
+        Ray ray = new Ray(GunPosition, target - GunPosition);
+
+        if (Physics.Raycast (ray, out rh, AimingDistance)) {
+            _crosshair.transform.position = rh.point;
+        } else {
+            _crosshair.transform.position = GunPosition + AimingDistance * (target - GunPosition).normalized;
         }
+
+        _line.SetPosition(1, _crosshair.transform.position);
     }
 }

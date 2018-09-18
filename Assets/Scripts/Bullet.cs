@@ -6,9 +6,15 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
     public float ShootingVelocity;
     public int Damage;
+    public float Range;
+    public float Accuracy;
+    public string[] IgnoredTags;
+
+    private Vector3 StartPosition;
 	// Use this for initialization
 	void Start () {
-		
+		StartPosition = transform.position;
+        Destroy (this.gameObject, Range / ShootingVelocity);
 	}
 	
 	// Update is called once per frame
@@ -21,14 +27,29 @@ public class Bullet : MonoBehaviour {
         GetComponent<Rigidbody>().velocity = ShootingVelocity * transform.forward;
     }
 
+    bool isIgnoredTag(string s)
+    {
+        foreach(string tag in IgnoredTags)
+        {
+            if(s == tag)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     void OnTriggerEnter(Collider other)
     {
-        print("Collided With " + other.name);
-        if(other.GetComponent<HealthController>() != null)
+        if (!isIgnoredTag(other.tag))
         {
-            print(other.name + " has a health");
-            other.GetComponent<HealthController>().ChangeHealth(-Mathf.Abs(Damage));
+            if (other.GetComponent<HealthController>() != null)
+            {
+                other.GetComponent<HealthController>().ChangeHealth(-Mathf.Abs(Damage));
+            }
+
             Destroy(gameObject);
         }
+
     }
 }
