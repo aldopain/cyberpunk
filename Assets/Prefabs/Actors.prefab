@@ -174,6 +174,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1170660359843530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4519020320651438}
+  - component: {fileID: 33625364875010218}
+  - component: {fileID: 23803645252561786}
+  - component: {fileID: 95008655567489494}
+  - component: {fileID: 114398329527217182}
+  m_Layer: 0
+  m_Name: Flamethrower
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1179219619820842
 GameObject:
   m_ObjectHideFlags: 1
@@ -494,7 +513,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1768597387202580
 GameObject:
   m_ObjectHideFlags: 1
@@ -543,8 +562,8 @@ GameObject:
   - component: {fileID: 114902786693122928}
   - component: {fileID: 114061206668781870}
   - component: {fileID: 114719082517700762}
-  - component: {fileID: 114668993559682008}
   - component: {fileID: 114864437873787416}
+  - component: {fileID: 114486173634065320}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -669,6 +688,7 @@ Transform:
   - {fileID: 4306430966380318}
   - {fileID: 4323000873172998}
   - {fileID: 4733503134759442}
+  - {fileID: 4519020320651438}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -863,6 +883,19 @@ Transform:
   m_Father: {fileID: 4332947327430724}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4519020320651438
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170660359843530}
+  m_LocalRotation: {x: -0.7071068, y: -0.000000014901163, z: -0.000000014901163, w: 0.7071068}
+  m_LocalPosition: {x: 2.0847158, y: 8.415777, z: -14.776318}
+  m_LocalScale: {x: 0.10000001, y: 0.10000019, z: 0.100000165}
+  m_Children: []
+  m_Father: {fileID: 4201667990824328}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &4551883117294542
 Transform:
   m_ObjectHideFlags: 1
@@ -1800,6 +1833,41 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!23 &23803645252561786
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170660359843530}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: 392fa0abac257e448873ac7ba74dc3b3, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!23 &23807494056693186
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -1975,6 +2043,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1136256368853814}
   m_Mesh: {fileID: 4300020, guid: 2093826e2e7b8944a9db2ee45b935669, type: 3}
+--- !u!33 &33625364875010218
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170660359843530}
+  m_Mesh: {fileID: 4300000, guid: 392fa0abac257e448873ac7ba74dc3b3, type: 3}
 --- !u!33 &33665724259196676
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -2038,6 +2113,24 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1332255736148030}
   m_Mesh: {fileID: 4300046, guid: 2093826e2e7b8944a9db2ee45b935669, type: 3}
+--- !u!95 &95008655567489494
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170660359843530}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 392fa0abac257e448873ac7ba74dc3b3, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!95 &95242272486629396
 Animator:
   serializedVersion: 3
@@ -2122,10 +2215,53 @@ MonoBehaviour:
   ReloadTime: 1.5
   CurrentFireMode: 0
   BurstShotsCount: 3
+  BulletsPerShot: 5
   OrbitCenterOffset: {x: 0, y: 0, z: 0}
   OrbitingRadius: 0.15
   RecieveRotation: 0
   RecieveShootingInputs: 1
+--- !u!114 &114398329527217182
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170660359843530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 514a0d20ea93a1f4fb59d1bb35ddd086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BulletPrefab: {fileID: 114249376676716826, guid: ed840e2ebd6a6094da7739778207739f,
+    type: 2}
+  ShootingDelay: 0.1
+  MaxMagazineCapacity: 1000
+  ReloadTime: 2
+  CurrentFireMode: 0
+  BurstShotsCount: 5
+  BulletsPerShot: 1
+  OrbitCenterOffset: {x: 0, y: 0, z: 0}
+  OrbitingRadius: 0.15
+  RecieveRotation: 0
+  RecieveShootingInputs: 0
+--- !u!114 &114486173634065320
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1908573915898912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d901d5e3fe9ed9c4ba6199e5dae5cde8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 10
+  CurrentHealth: 10
+  StartWithCustomHealth: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114509031038355246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2137,18 +2273,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ed60f5a781de040a0087cac15197e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114668993559682008
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1908573915898912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14a38c79430945d45b79038d84c92dae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Text: Aiming Distance _PlayerAiming.AimingDistance_ ; *HealthController.GetHealth*
 --- !u!114 &114719082517700762
 MonoBehaviour:
   m_ObjectHideFlags: 1
