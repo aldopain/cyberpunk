@@ -19,6 +19,11 @@ public class GenericGun : MonoBehaviour {
     public int BurstShotsCount;
     public int BulletsPerShot;
 
+    //Fire modes
+    public bool canAutoFire;
+    public bool canSingleFire;
+    public bool canBurstFire;
+
     [Header("Orbit Settings")]
     public Vector3 OrbitCenterOffset;
     public float OrbitingRadius;
@@ -35,13 +40,38 @@ public class GenericGun : MonoBehaviour {
     private int CurrentMagazineCapacity;
     float TimeSinceShot;
     int consecutiveShotsFired;
+    bool[] fireModeMask;
+
 
 	// Use this for initialization
 	void Start () {
         CurrentMagazineCapacity = MaxMagazineCapacity;
         _aim = GameObject.Find("Player").GetComponent<PlayerAiming>();
         _startingTransform = transform;
+
+        SetupFireModeMask();
 	}
+
+    void SetupFireModeMask()
+    {
+        int FIRE_MODE_LENGTH = 3;
+        fireModeMask = new bool[FIRE_MODE_LENGTH];
+
+        if(!(canAutoFire || canSingleFire || canBurstFire))
+        {
+            canSingleFire = true;
+        }
+
+        fireModeMask[0] = canAutoFire;
+        fireModeMask[1] = canSingleFire;
+        fireModeMask[2] = canBurstFire;
+
+        //Setting the default firemode
+        if (!fireModeMask[(int)CurrentFireMode])
+        {
+            FiremodeSwitch();
+        }
+    }
 
     void UpdateRotation()
     {
@@ -91,12 +121,25 @@ public class GenericGun : MonoBehaviour {
 
     void FiremodeSwitch()
     {
-        if((int)CurrentFireMode == System.Enum.GetNames(typeof(FireMode)).Length - 1)
+        bool flag = false;
+        int curMode = (int)CurrentFireMode;
+
+        while(flag == false)
         {
-            CurrentFireMode = 0;
-        }else
-        {
-            CurrentFireMode++;
+            if (curMode == System.Enum.GetNames(typeof(FireMode)).Length - 1)
+            {
+                curMode = 0;
+            }
+            else
+            {
+                curMode++;
+            }
+
+            if (fireModeMask[curMode])
+            {
+                flag = true;
+                CurrentFireMode = (FireMode)curMode;
+            }
         }
     }
 

@@ -2762,6 +2762,21 @@ Prefab:
       propertyPath: _gun
       value: 
       objectReference: {fileID: 1626314010}
+    - target: {fileID: 114171780843210312, guid: 27b2ef822ca95744da9e77ef75d164c7,
+        type: 2}
+      propertyPath: canBurstFire
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114171780843210312, guid: 27b2ef822ca95744da9e77ef75d164c7,
+        type: 2}
+      propertyPath: canSingleFire
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114171780843210312, guid: 27b2ef822ca95744da9e77ef75d164c7,
+        type: 2}
+      propertyPath: canAutoFire
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27b2ef822ca95744da9e77ef75d164c7, type: 2}
   m_IsPrefabAsset: 0
