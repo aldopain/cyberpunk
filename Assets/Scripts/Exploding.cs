@@ -44,6 +44,7 @@ public class Exploding : MonoBehaviour {
                     CollidersAndLayers.Add (new KeyValuePair<Collider, int>(current, current.gameObject.layer));
                     current.gameObject.layer = 2;
                     Debug.Log (current.gameObject.layer);
+                    Debug.DrawRay(ray.origin, rh.point - transform.position, Color.yellow, Mathf.Infinity);
             }
         }
 
