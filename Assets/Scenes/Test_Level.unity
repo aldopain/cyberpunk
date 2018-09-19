@@ -8101,6 +8101,11 @@ MonoBehaviour:
   MaxHealth: 5
   CurrentHealth: 0
   StartWithCustomHealth: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1001 &1049740057
 Prefab:
   m_ObjectHideFlags: 0
