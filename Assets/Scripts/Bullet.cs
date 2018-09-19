@@ -28,8 +28,10 @@ public class Bullet : MonoBehaviour
 
     public void Shoot()
     {
-        transform.Rotate (new Vector3 (0, Random.Range(-AngleDeflectionAbs, AngleDeflectionAbs), 0));
-        GetComponent<Rigidbody>().velocity = ShootingVelocity * transform.forward;
+        if (Time.timeScale != 0f) {
+            transform.Rotate (new Vector3 (0, Random.Range(-AngleDeflectionAbs, AngleDeflectionAbs), 0));
+            GetComponent<Rigidbody>().velocity = ShootingVelocity * transform.forward;
+        }
     }
 
     bool isIgnoredTag(string s)
