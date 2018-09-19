@@ -13,14 +13,14 @@ public class PlayerAiming : MonoBehaviour {
 
     private float RotationAngle;
 
-    private GameObject _gun;
+    public GameObject _gun;
 
 	// Use this for initialization
 	void Start () {
         _line.transform.position = Vector3.zero;
         _line.SetPosition(0, Vector3.zero);
         heightOffset = new Vector3 (0.989949f, 1f, 1.02813133f);
-        _gun = GameObject.Find ("TestGun"); 
+        //_gun = GameObject.Find ("Flamethrower"); 
 	}
 
     public Vector3 GetTargetPosition() { 

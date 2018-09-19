@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114902392113166004}
   - component: {fileID: 114676228419098966}
   - component: {fileID: 195614183504937974}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: GenericAI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 23656304182581382}
   - component: {fileID: 95813785847806610}
   - component: {fileID: 114034220430070294}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: TestEnemyGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,6 +228,11 @@ MonoBehaviour:
   MaxHealth: 5
   CurrentHealth: 0
   StartWithCustomHealth: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!136 &136319008609570208
 CapsuleCollider:
   m_ObjectHideFlags: 1

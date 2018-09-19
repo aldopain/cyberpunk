@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4660900941253432}
   - component: {fileID: 33447156856100042}
   - component: {fileID: 23593846032171766}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanSpine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4257436342581872}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base Human
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 4406257640610798}
   - component: {fileID: 33306503803709264}
   - component: {fileID: 23387643171999436}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanRForearm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 4074868548458890}
   - component: {fileID: 33729314811242272}
   - component: {fileID: 23982264066335200}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanNeck1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 4450762126592532}
   - component: {fileID: 33696094037218740}
   - component: {fileID: 23651062251224362}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanLCollarbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 4174921078048582}
   - component: {fileID: 33614106061709776}
   - component: {fileID: 23807494056693186}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanSpine3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 4346880788617118}
   - component: {fileID: 33265620570628256}
   - component: {fileID: 23786245703144012}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanLForearm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,6 +174,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1170660359843530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4519020320651438}
+  - component: {fileID: 33625364875010218}
+  - component: {fileID: 23803645252561786}
+  - component: {fileID: 95008655567489494}
+  - component: {fileID: 114398329527217182}
+  m_Layer: 0
+  m_Name: Flamethrower
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1179219619820842
 GameObject:
   m_ObjectHideFlags: 1
@@ -184,7 +203,7 @@ GameObject:
   - component: {fileID: 4161684883191280}
   - component: {fileID: 33530016109751164}
   - component: {fileID: 23164996960417754}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanSpine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +220,7 @@ GameObject:
   - component: {fileID: 4019743839436182}
   - component: {fileID: 33299179929528220}
   - component: {fileID: 23711493303605458}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanPelvis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +237,7 @@ GameObject:
   - component: {fileID: 4807399392155190}
   - component: {fileID: 33665724259196676}
   - component: {fileID: 23386457509585794}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanRCollarbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +254,7 @@ GameObject:
   - component: {fileID: 4570516571742690}
   - component: {fileID: 33850360337805406}
   - component: {fileID: 23313718739122030}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanRUpperarm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +271,7 @@ GameObject:
   - component: {fileID: 4597789204938458}
   - component: {fileID: 33824867516919770}
   - component: {fileID: 23771431372061278}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanNeck2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +288,7 @@ GameObject:
   - component: {fileID: 4375822317092538}
   - component: {fileID: 33064495085953546}
   - component: {fileID: 23572899876434222}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanLPalm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -286,7 +305,7 @@ GameObject:
   - component: {fileID: 4264139037097112}
   - component: {fileID: 33930024587888588}
   - component: {fileID: 23788569336904394}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanRFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,7 +322,7 @@ GameObject:
   - component: {fileID: 4384371133222254}
   - component: {fileID: 33934841168654888}
   - component: {fileID: 23154256577067136}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,7 +339,7 @@ GameObject:
   - component: {fileID: 4904172285312988}
   - component: {fileID: 33934648997134122}
   - component: {fileID: 23504966737118454}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanLFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +356,7 @@ GameObject:
   - component: {fileID: 4108891845129010}
   - component: {fileID: 33363596822014132}
   - component: {fileID: 23360275833906412}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanRCalf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -354,7 +373,7 @@ GameObject:
   - component: {fileID: 4372907046001844}
   - component: {fileID: 33527914686930092}
   - component: {fileID: 23705070592523010}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanLThigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,7 +390,7 @@ GameObject:
   - component: {fileID: 4315415242775472}
   - component: {fileID: 33276530868054014}
   - component: {fileID: 23386865536144320}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanRThigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -388,7 +407,7 @@ GameObject:
   - component: {fileID: 4702418254645796}
   - component: {fileID: 33734917096710978}
   - component: {fileID: 23734973699688214}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanLCalf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,7 +422,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4850665924328320}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanLPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +457,7 @@ GameObject:
   - component: {fileID: 4446668181133236}
   - component: {fileID: 33114560964453214}
   - component: {fileID: 23544433408754278}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanLUpperarm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +472,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4686745001221628}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanRPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -469,7 +488,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4379157944384888}
   - component: {fileID: 137022314441586958}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Box001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -494,7 +513,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1768597387202580
 GameObject:
   m_ObjectHideFlags: 1
@@ -505,7 +524,7 @@ GameObject:
   - component: {fileID: 4332947327430724}
   - component: {fileID: 33205385969228548}
   - component: {fileID: 23395032832000626}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanRibcage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -522,7 +541,7 @@ GameObject:
   - component: {fileID: 4551883117294542}
   - component: {fileID: 33295461596831446}
   - component: {fileID: 23427795209181060}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanSpine4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -541,9 +560,11 @@ GameObject:
   - component: {fileID: 136691209166942706}
   - component: {fileID: 143343020489523104}
   - component: {fileID: 114902786693122928}
-  - component: {fileID: 114979637610966502}
   - component: {fileID: 114061206668781870}
-  m_Layer: 2
+  - component: {fileID: 114719082517700762}
+  - component: {fileID: 114864437873787416}
+  - component: {fileID: 114486173634065320}
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -560,7 +581,7 @@ GameObject:
   - component: {fileID: 4691371530240370}
   - component: {fileID: 33016750006735470}
   - component: {fileID: 23498690963317222}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base HumanRPalm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -659,7 +680,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1076161355932640}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 5.8899994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4932896936740288}
@@ -667,6 +688,7 @@ Transform:
   - {fileID: 4306430966380318}
   - {fileID: 4323000873172998}
   - {fileID: 4733503134759442}
+  - {fileID: 4519020320651438}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -861,6 +883,19 @@ Transform:
   m_Father: {fileID: 4332947327430724}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4519020320651438
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170660359843530}
+  m_LocalRotation: {x: -0.7071068, y: -0.000000014901163, z: -0.000000014901163, w: 0.7071068}
+  m_LocalPosition: {x: 2.0847158, y: 8.415777, z: -14.776318}
+  m_LocalScale: {x: 0.10000001, y: 0.10000019, z: 0.100000165}
+  m_Children: []
+  m_Father: {fileID: 4201667990824328}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &4551883117294542
 Transform:
   m_ObjectHideFlags: 1
@@ -1798,6 +1833,41 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!23 &23803645252561786
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170660359843530}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: 392fa0abac257e448873ac7ba74dc3b3, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!23 &23807494056693186
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -1973,6 +2043,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1136256368853814}
   m_Mesh: {fileID: 4300020, guid: 2093826e2e7b8944a9db2ee45b935669, type: 3}
+--- !u!33 &33625364875010218
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170660359843530}
+  m_Mesh: {fileID: 4300000, guid: 392fa0abac257e448873ac7ba74dc3b3, type: 3}
 --- !u!33 &33665724259196676
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -2036,6 +2113,24 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1332255736148030}
   m_Mesh: {fileID: 4300046, guid: 2093826e2e7b8944a9db2ee45b935669, type: 3}
+--- !u!95 &95008655567489494
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170660359843530}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 392fa0abac257e448873ac7ba74dc3b3, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!95 &95242272486629396
 Animator:
   serializedVersion: 3
@@ -2089,8 +2184,8 @@ MonoBehaviour:
   _crosshair: {fileID: 114509031038355246}
   _line: {fileID: 120506075298509460}
   useRadialAiming: 0
-  AimingDistance: 1
-  AboveGroundCrosshairHeight: 0.8
+  AimingDistance: 4
+  heightOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &114093841224957306
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2115,8 +2210,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 114353970986411988, guid: 7bdd0197f71398c4e9ae6e50515f997b,
     type: 2}
+  ShootingDelay: 0.15
+  MaxMagazineCapacity: 30
+  ReloadTime: 1.5
+  CurrentFireMode: 0
+  BurstShotsCount: 3
+  BulletsPerShot: 5
   OrbitCenterOffset: {x: 0, y: 0, z: 0}
   OrbitingRadius: 0.15
+  RecieveRotation: 0
+  RecieveShootingInputs: 1
+--- !u!114 &114398329527217182
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170660359843530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 514a0d20ea93a1f4fb59d1bb35ddd086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BulletPrefab: {fileID: 114249376676716826, guid: ed840e2ebd6a6094da7739778207739f,
+    type: 2}
+  ShootingDelay: 0.1
+  MaxMagazineCapacity: 1000
+  ReloadTime: 2
+  CurrentFireMode: 0
+  BurstShotsCount: 5
+  BulletsPerShot: 1
+  OrbitCenterOffset: {x: 0, y: 0, z: 0}
+  OrbitingRadius: 0.15
+  RecieveRotation: 0
+  RecieveShootingInputs: 0
+--- !u!114 &114486173634065320
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1908573915898912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d901d5e3fe9ed9c4ba6199e5dae5cde8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 10
+  CurrentHealth: 10
+  StartWithCustomHealth: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114509031038355246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2128,6 +2273,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ed60f5a781de040a0087cac15197e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114719082517700762
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1908573915898912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b38c7a196984840b4de976a0ae7559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firingAngle: 45
+  SelectedThrowableObject: {fileID: 1846842729138292, guid: 56bc1bf0831df2f459dabccbd4ef1ac3,
+    type: 2}
+  RecieveInput: 1
+--- !u!114 &114864437873787416
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1908573915898912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d901d5e3fe9ed9c4ba6199e5dae5cde8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 10
+  CurrentHealth: 10
+  StartWithCustomHealth: 0
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114902786693122928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2139,30 +2318,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c254c9f6ef304d849aa0284dc2f3a7c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 1
+  MovementSpeed: 3
   WalkingSpeed: 0.7
   lookSpeed: 10
   CrouchSpeed: 0.5
-  dashMultiply: 10
+  dashMultiply: 20
   target: {fileID: 4323000873172998}
---- !u!114 &114979637610966502
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1908573915898912}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 811e2f953f2dd364aa7ed16390c48f39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mask:
-    serializedVersion: 2
-    m_Bits: 51
-  _crosshair: {fileID: 114509031038355246}
-  _line: {fileID: 120506075298509460}
-  AimingDistance: 1.5
-  AimingSpeed: 1.2
 --- !u!120 &120506075298509460
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -2263,7 +2424,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1908573915898912}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.1
   m_Height: 0.65
   m_Direction: 1
