@@ -5,13 +5,13 @@ using UnityEngine;
 public class AI_SensorySystem : MonoBehaviour {
     public struct SensoryInfo
     {
-        AlertnessStates _alertnessState;
-        int currentHealth;
-        int playerHealth;
-
+        public AlertnessStates _alertnessState;
+        public int currentHealth;
+        public int playerHealth;
+        public Vector3 movementTarget;
     }
 
-    enum AlertnessStates
+    public enum AlertnessStates
     {
         Low,
         Medium,
@@ -34,6 +34,8 @@ public class AI_SensorySystem : MonoBehaviour {
     bool isSeenByPlayer;
 
     GameObject _player;
+    AI_DecisionSystem _decision;
+    HealthController _hc;
 
     void OnBecameVisible()
     {
@@ -43,10 +45,23 @@ public class AI_SensorySystem : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         _player = GameObject.Find("Player");
+        _decision = GetComponent<AI_DecisionSystem>();
+        _hc = GetComponent<HealthController>();
+
+        StartCoroutine(SendInfo());
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    IEnumerator SendInfo()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(UpdateRate);
+            _decision.RecieveSensoryInfo(CompileSensoryInfo());
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (isSeeingPlayer)
         {
             if(CurrentAlertnessLevel < TimeToDetectPlayer)
@@ -74,6 +89,30 @@ public class AI_SensorySystem : MonoBehaviour {
         {
             isSeeingPlayer = false;
         }
+    }
+
+    SensoryInfo CompileSensoryInfo()
+    {
+        SensoryInfo info = new SensoryInfo();
+
+        info._alertnessState = CurrentAlertnessState;
+        info.currentHealth = _hc.GetHealth();
+        info.playerHealth = _player.GetComponent<HealthController>().GetHealth();
+
+        switch (CurrentAlertnessState)
+        {
+            case AlertnessStates.Low:
+                info.movementTarget = Vector3.zero;
+                break;
+            case AlertnessStates.Medium:
+                info.movementTarget = Vector3.zero;
+                break;
+            case AlertnessStates.High:
+                info.movementTarget = _player.transform.position;
+                break;
+        }
+
+        return info;
     }
 
     public void RecieveSounds(List<GameObject> real, List<GameObject> pseudo)
