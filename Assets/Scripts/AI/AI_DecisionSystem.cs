@@ -4,26 +4,23 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class AI_DecisionSystem : MonoBehaviour {
-    public Transform[] PatrolWayPoints;
+    public float TEMP_MELEE_RANGE; //TO BE REPLACE WHEN ACTUAL MELEE COMPONENT IS COMPLETE
 
     AI_SensorySystem.SensoryInfo info;
-    int patrolDest = 0;
-    NavMeshAgent agent;
+    AI_BehaviourCollection behaviour;
+    GameObject _player;
 
-	// Use this for initialization
-	void Start () {
-        agent = GetComponent<NavMeshAgent>();
-        SetupAgent();
-	}
-	
-    void SetupAgent()
+    AI_SensorySystem.AlertnessStates prevState;
+    void Start()
     {
-        agent.autoBraking = false;
+        behaviour = GetComponent<AI_BehaviourCollection>();
+        _player = GameObject.Find("Player");
+        prevState = AI_SensorySystem.AlertnessStates.Low;
     }
-
 
     public void RecieveSensoryInfo(AI_SensorySystem.SensoryInfo _info)
     {
+        prevState = info._alertnessState;
         info = _info;
         MakeDecision();
     }
@@ -33,51 +30,58 @@ public class AI_DecisionSystem : MonoBehaviour {
         switch (info._alertnessState)
         {
             case AI_SensorySystem.AlertnessStates.Low:
-                Patrol();
+                CallBehaviour_Low();
                 break;
             case AI_SensorySystem.AlertnessStates.Medium:
-                Patrol();
+                CallBehaviour_Medium();
                 break;
             case AI_SensorySystem.AlertnessStates.High:
-                ChasePlayer();
+                CallBehaviour_High();
                 break;
         }
     }
     
-    void Patrol()
+    void CallBehaviour_Low()
     {
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
-        {
-            GotoNextPatrolPoint();
-        }
+        behaviour.Patrol();
     }
 
-    void GotoNextPatrolPoint()
+    void CallBehaviour_Medium()
     {
-        if (PatrolWayPoints.Length == 0)
+        if (info.hasSeenPlayer && !info.isSeeingPlayer)
         {
-            Debug.LogWarningFormat("{0} doesn't have specified patrol points");
+            //TO BE FIXED WITH ACTUAL "LAST SEEN POSITION" SYSTEM
+            behaviour.Investigate(GameObject.Find("Player").transform);
+        }
+
+        if (info.hasHeardPlayer)
+        {
+            behaviour.Investigate(info.PointsOfInterest[0]);
             return;
         }
-        agent.destination = PatrolWayPoints[patrolDest].position;
-        patrolDest = (patrolDest + 1) % PatrolWayPoints.Length;
+
+        behaviour.Patrol();
     }
 
-    void ChasePlayer()
+    void CallBehaviour_High()
     {
-        if(info.movementTarget == Vector3.zero)
+        if(info.isSeeingPlayer && Vector3.Distance(transform.position, GameObject.Find("Player").transform.position) < TEMP_MELEE_RANGE)
         {
-            SearchPlayer();
-        }else
-        {
-            agent.SetDestination(info.movementTarget);
+            behaviour.Melee();
+            return;
         }
+
+        if (info.isSeeingPlayer)
+        {
+            behaviour.Shoot();
+            return;
+        }
+
+        //TO BE FIXED WITH ACTUAL "LAST SEEN POSITION" SYSTEM
+        behaviour.Investigate(GameObject.Find("Player").transform);
     }
 
-    void SearchPlayer()
-    {
 
-    }
     // Update is called once per frame
     void Update () {
 
