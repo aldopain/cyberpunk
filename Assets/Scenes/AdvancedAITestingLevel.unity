@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 53115276}
   - component: {fileID: 53115275}
   - component: {fileID: 53115274}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -367,7 +367,7 @@ GameObject:
   m_Layer: 0
   m_Name: PatrolWaypoint (2)
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -400,6 +400,7 @@ GameObject:
   - component: {fileID: 790847857}
   - component: {fileID: 790847856}
   - component: {fileID: 790847855}
+  - component: {fileID: 790847863}
   - component: {fileID: 790847854}
   m_Layer: 0
   m_Name: AdvancedAI
@@ -442,12 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01c2da33078a2ee419cfeef691e203d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PatrolWayPoints:
-  - {fileID: 842220401}
-  - {fileID: 1676709846}
-  - {fileID: 727726227}
-  - {fileID: 1619204042}
-  - {fileID: 1435842225}
+  TEMP_MELEE_RANGE: 0
 --- !u!114 &790847856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,7 +456,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a24b2e8772c104c8d7bd47cb4a6202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeToDetectPlayer: 1
+  MaxAlertness: 5
+  TimeToMediumAlert: 1
+  TimeToHighAlert: 3
   UpdateRate: 0
 --- !u!114 &790847857
 MonoBehaviour:
@@ -573,6 +571,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &790847863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 790847853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1ba37dd57d05046b672eea4a01155a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PatrolWayPoints:
+  - {fileID: 842220401}
+  - {fileID: 1676709846}
+  - {fileID: 727726227}
+  - {fileID: 1619204042}
+  - {fileID: 1435842225}
+  Alarms: []
 --- !u!1 &791276288
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,7 +677,7 @@ GameObject:
   m_Layer: 0
   m_Name: PatrolWaypoint
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -689,7 +705,7 @@ GameObject:
   - component: {fileID: 880526999}
   - component: {fileID: 880526998}
   - component: {fileID: 880526997}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -774,7 +790,7 @@ GameObject:
   - component: {fileID: 957217786}
   - component: {fileID: 957217785}
   - component: {fileID: 957217784}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -859,7 +875,7 @@ GameObject:
   - component: {fileID: 1129106273}
   - component: {fileID: 1129106272}
   - component: {fileID: 1129106271}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1102,7 +1118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DetectableLayers:
     serializedVersion: 2
-    m_Bits: 51
+    m_Bits: 512
   isBlind: 0
   SensorySystem: {fileID: 1569180757}
 --- !u!65 &1318835396
@@ -1123,7 +1139,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1318835393}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1204,7 +1220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DetectableLayers:
     serializedVersion: 2
-    m_Bits: 51
+    m_Bits: 512
   isBlind: 0
   SensorySystem: {fileID: 790847856}
 --- !u!65 &1363865184
@@ -1225,7 +1241,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1363865181}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1272,7 +1288,7 @@ GameObject:
   m_Layer: 0
   m_Name: PatrolWaypoint (4)
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1300,7 +1316,7 @@ GameObject:
   - component: {fileID: 1486248371}
   - component: {fileID: 1486248370}
   - component: {fileID: 1486248369}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1385,7 +1401,7 @@ GameObject:
   - component: {fileID: 1486280840}
   - component: {fileID: 1486280839}
   - component: {fileID: 1486280838}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1594,7 +1610,7 @@ GameObject:
   - component: {fileID: 1523021755}
   - component: {fileID: 1523021754}
   - component: {fileID: 1523021753}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1689,6 +1705,7 @@ GameObject:
   - component: {fileID: 1569180758}
   - component: {fileID: 1569180757}
   - component: {fileID: 1569180756}
+  - component: {fileID: 1569180764}
   - component: {fileID: 1569180755}
   m_Layer: 0
   m_Name: AdvancedAI (1)
@@ -1731,12 +1748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01c2da33078a2ee419cfeef691e203d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PatrolWayPoints:
-  - {fileID: 842220401}
-  - {fileID: 1676709846}
-  - {fileID: 727726227}
-  - {fileID: 1619204042}
-  - {fileID: 1435842225}
+  TEMP_MELEE_RANGE: 0
 --- !u!114 &1569180757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1749,7 +1761,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a24b2e8772c104c8d7bd47cb4a6202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeToDetectPlayer: 1
+  MaxAlertness: 5
+  TimeToMediumAlert: 1
+  TimeToHighAlert: 3
   UpdateRate: 0
 --- !u!114 &1569180758
 MonoBehaviour:
@@ -1862,6 +1876,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1569180764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1569180754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1ba37dd57d05046b672eea4a01155a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PatrolWayPoints:
+  - {fileID: 842220401}
+  - {fileID: 1676709846}
+  - {fileID: 727726227}
+  - {fileID: 1619204042}
+  - {fileID: 1435842225}
+  Alarms: []
 --- !u!1 &1619204041
 GameObject:
   m_ObjectHideFlags: 0
@@ -1873,7 +1905,7 @@ GameObject:
   m_Layer: 0
   m_Name: PatrolWaypoint (3)
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1901,7 +1933,7 @@ GameObject:
   m_Layer: 0
   m_Name: PatrolWaypoint (1)
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1929,7 +1961,7 @@ GameObject:
   - component: {fileID: 1682775985}
   - component: {fileID: 1682775984}
   - component: {fileID: 1682775983}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2163,7 +2195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2064709197}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LevelEnvironment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2203,7 +2235,7 @@ GameObject:
   - component: {fileID: 2146721083}
   - component: {fileID: 2146721082}
   - component: {fileID: 2146721081}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
