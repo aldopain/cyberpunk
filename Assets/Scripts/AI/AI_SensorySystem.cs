@@ -8,7 +8,10 @@ public class AI_SensorySystem : MonoBehaviour {
         public AlertnessStates _alertnessState;
         public int currentHealth;
         public int playerHealth;
-        public Vector3 movementTarget;
+        public List<Transform> PointsOfInterest;
+        public bool isSeeingPlayer;
+        public bool hasSeenPlayer;
+        public bool hasHeardPlayer;
     }
 
     public enum AlertnessStates
@@ -19,8 +22,10 @@ public class AI_SensorySystem : MonoBehaviour {
     }
 
     [Header("Settings")]
-    public float TimeToDetectPlayer;
-    
+    public float MaxAlertness;
+    public float TimeToMediumAlert;
+    public float TimeToHighAlert;
+
     [Header("System")]
     public float UpdateRate;
 
@@ -29,7 +34,10 @@ public class AI_SensorySystem : MonoBehaviour {
     List<GameObject> VisibleObjects;
     List<GameObject> RealSounds;
     List<GameObject> PseudoSounds;
+    List<Transform> pointsOfInterest = new List<Transform>();
 
+    bool hasSeenPlayer;
+    bool hasHeardPlayer;
     bool isSeeingPlayer;
     bool isSeenByPlayer;
 
@@ -64,17 +72,35 @@ public class AI_SensorySystem : MonoBehaviour {
     void Update () {
         if (isSeeingPlayer)
         {
-            if(CurrentAlertnessLevel < TimeToDetectPlayer)
+            IncreaseAlertness();
+
+            if(CurrentAlertnessLevel > TimeToMediumAlert)
             {
-                IncreaseAlertness();
-            }else
-            {
-                DetectPlayer();
+                if(CurrentAlertnessLevel > TimeToHighAlert)
+                {
+                    if(CurrentAlertnessState != AlertnessStates.High)
+                        GotoHighAlert();
+                }else
+                {
+                    if (CurrentAlertnessState != AlertnessStates.Medium)
+                        GotoMediumAlert();
+                }
             }
         }else
-        {   if(CurrentAlertnessLevel > 0)
+        {
+            DecreaseAlertness(.5f);
+            if (CurrentAlertnessLevel < TimeToHighAlert)
             {
-                DecreaseAlertness();
+                if (CurrentAlertnessLevel < TimeToMediumAlert)
+                {
+                    if (CurrentAlertnessState != AlertnessStates.Low)
+                        GotoLowAlert();
+                }
+                else
+                {
+                    if (CurrentAlertnessState != AlertnessStates.Medium)
+                        GotoMediumAlert();
+                }
             }
         }
 	}
@@ -85,6 +111,8 @@ public class AI_SensorySystem : MonoBehaviour {
         if (VisibleObjects.Contains(_player))
         {
             isSeeingPlayer = true;
+            hasSeenPlayer = true;
+            pointsOfInterest.Add(VisibleObjects[VisibleObjects.IndexOf(_player)].transform);
         }else
         {
             isSeeingPlayer = false;
@@ -98,20 +126,11 @@ public class AI_SensorySystem : MonoBehaviour {
         info._alertnessState = CurrentAlertnessState;
         info.currentHealth = _hc.GetHealth();
         info.playerHealth = _player.GetComponent<HealthController>().GetHealth();
-
-        switch (CurrentAlertnessState)
-        {
-            case AlertnessStates.Low:
-                info.movementTarget = Vector3.zero;
-                break;
-            case AlertnessStates.Medium:
-                info.movementTarget = Vector3.zero;
-                break;
-            case AlertnessStates.High:
-                info.movementTarget = _player.transform.position;
-                break;
-        }
-
+        info.PointsOfInterest = pointsOfInterest;
+        pointsOfInterest.Clear();
+        info.isSeeingPlayer = isSeeingPlayer;
+        info.hasSeenPlayer = hasSeenPlayer;
+        info.hasHeardPlayer = hasHeardPlayer;
         return info;
     }
 
@@ -119,20 +138,46 @@ public class AI_SensorySystem : MonoBehaviour {
     {
         RealSounds = real;
         PseudoSounds = pseudo;
+
+        foreach(GameObject s in RealSounds)
+        {
+            if(s.GetComponent<AI_Sound>().OwnerName == "Player")
+            {
+                hasHeardPlayer = true;
+                pointsOfInterest.Add(s.transform);
+            }
+        }
     }
     
     void IncreaseAlertness(float multiplier = 1f)
     {
-        CurrentAlertnessLevel += Time.deltaTime;
+        if(CurrentAlertnessLevel < MaxAlertness)
+            CurrentAlertnessLevel += Time.deltaTime * multiplier;
     }
 
     void DecreaseAlertness(float multiplier = 1f)
     {
-        CurrentAlertnessLevel -= Time.deltaTime;
+        if (CurrentAlertnessLevel > 0)
+            CurrentAlertnessLevel -= Time.deltaTime * multiplier;
     }
 
-    public void DetectPlayer()
+    void GotoLowAlert()
+    {
+        CurrentAlertnessState = AlertnessStates.Medium;
+    }
+
+    void GotoMediumAlert()
+    {
+        CurrentAlertnessState = AlertnessStates.Medium;
+    }
+
+    void GotoHighAlert()
     {
         CurrentAlertnessState = AlertnessStates.High;
+    }
+
+    public void ForceAlertness(AlertnessStates state)
+    {
+        CurrentAlertnessState = state;
     }
 }
