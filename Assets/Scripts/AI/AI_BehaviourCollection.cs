@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public class AI_BehaviourCollection : MonoBehaviour {
     public Transform[] PatrolWayPoints;
     public AI_Alarm[] Alarms;
+    public float TargetAvoidanceRadius;
     int patrolDest = 0;
     NavMeshAgent agent;
 
@@ -40,7 +41,13 @@ public class AI_BehaviourCollection : MonoBehaviour {
 
     public void Investigate(Transform poi)
     {
-        agent.destination = poi.position;
+        //agent.destination = poi.position;
+        Vector3 pos;
+        pos.x = poi.transform.position.x + TargetAvoidanceRadius * Mathf.Cos(Mathf.Deg2Rad * Random.Range(0, 360));
+        pos.y = poi.transform.position.y;
+        pos.z = poi.transform.position.z + TargetAvoidanceRadius * Mathf.Sin(Mathf.Deg2Rad * Random.Range(0, 360));
+
+        agent.destination = pos;
     }
 
     public void SoundAlarm()
