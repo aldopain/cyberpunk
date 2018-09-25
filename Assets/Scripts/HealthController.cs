@@ -12,6 +12,7 @@ public class HealthController : MonoBehaviour {
     public bool StartWithCustomHealth;
 
     public UnityEvent OnDeath;
+    public UnityEvent OnHit;
     private bool _isDead;
 	// Use this for initialization
 	void Start () {
