@@ -714,6 +714,7 @@ MonoBehaviour:
   - {fileID: 1435842225}
   Alarms:
   - {fileID: 535821941}
+  TargetAvoidanceRadius: 0.4
 --- !u!114 &790847864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2123,6 +2124,7 @@ MonoBehaviour:
   - {fileID: 1435842225}
   Alarms:
   - {fileID: 535821941}
+  TargetAvoidanceRadius: 0.4
 --- !u!114 &1569180765
 MonoBehaviour:
   m_ObjectHideFlags: 0

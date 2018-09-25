@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7284de79119e6c34089f092185161042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OwnerName: GlobalAlert
+  OwnerName: Global Alert
   Type: 0
 --- !u!135 &135555293189796750
 SphereCollider:
