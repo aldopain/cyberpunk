@@ -1,17 +1,36 @@
 fileFormatVersion: 2
-guid: 37fb51850d0aaa74aac806b1f5f496cd
+guid: 3deec11a544e9a04784c3d90120d0454
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: unnamed
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Cone
-    7400000: Default Take
-    9500000: //RootNode
-    2186277476908879412: ImportLogs
+    100000: Box002
+    100002: Box003
+    100004: Box004
+    100006: Box005
+    100008: Box006
+    100010: //RootNode
+    400000: Box002
+    400002: Box003
+    400004: Box004
+    400006: Box005
+    400008: Box006
+    400010: //RootNode
+    2100000: No Name
+    2300000: Box002
+    2300002: Box003
+    2300004: Box004
+    2300006: Box005
+    2300008: Box006
+    3300000: Box002
+    3300002: Box003
+    3300004: Box004
+    3300006: Box005
+    3300008: Box006
+    4300000: Box003
+    4300002: Box005
+    4300004: Box004
+    4300006: Box006
+    4300008: Box002
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -64,7 +83,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -89,7 +108,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
