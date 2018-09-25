@@ -28,6 +28,7 @@ public class AI_SensorySystem : MonoBehaviour {
 
     [Header("System")]
     public float UpdateRate;
+    public AI_Sound AlertSound;
 
     AlertnessStates CurrentAlertnessState;
     float CurrentAlertnessLevel;
@@ -146,6 +147,11 @@ public class AI_SensorySystem : MonoBehaviour {
                 hasHeardPlayer = true;
                 pointsOfInterest.Add(s.transform);
             }
+
+            if(s.GetComponent<AI_Sound>().OwnerName == "Alert")
+            {
+                GotoHighAlert();
+            }
         }
     }
     
@@ -161,23 +167,59 @@ public class AI_SensorySystem : MonoBehaviour {
             CurrentAlertnessLevel -= Time.deltaTime * multiplier;
     }
 
-    void GotoLowAlert()
+    public void GotoLowAlert()
     {
-        CurrentAlertnessState = AlertnessStates.Medium;
+        if (CurrentAlertnessState != AlertnessStates.Low)
+        {
+            CurrentAlertnessState = AlertnessStates.Low;
+        }
+
+        CurrentAlertnessLevel = 0;
     }
 
-    void GotoMediumAlert()
+    public void GotoMediumAlert()
     {
-        CurrentAlertnessState = AlertnessStates.Medium;
+        if (CurrentAlertnessState != AlertnessStates.Medium)
+        {
+            CurrentAlertnessState = AlertnessStates.Medium;
+        }
+
+        CurrentAlertnessLevel = TimeToHighAlert - 0.01f;
     }
 
-    void GotoHighAlert()
+    public void GotoHighAlert()
     {
-        CurrentAlertnessState = AlertnessStates.High;
+        if(CurrentAlertnessState != AlertnessStates.High)
+        {
+            CurrentAlertnessState = AlertnessStates.High;
+            Destroy(Instantiate(AlertSound, transform.position, transform.rotation), 1);
+        }
+
+        CurrentAlertnessLevel = MaxAlertness;
     }
 
     public void ForceAlertness(AlertnessStates state)
     {
         CurrentAlertnessState = state;
+    }
+
+    public string GetCurrentAlertnessState()
+    {
+        switch (CurrentAlertnessState)
+        {
+            case AlertnessStates.High:
+                return "High";
+            case AlertnessStates.Medium:
+                return "Medium";
+            case AlertnessStates.Low:
+                return "Low";
+            default:
+                return "BUG";
+        }
+    }
+
+    public float GetCurrentAlertnessLevel()
+    {
+        return CurrentAlertnessLevel;
     }
 }
