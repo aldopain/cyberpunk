@@ -12,6 +12,7 @@ public class AI_SensorySystem : MonoBehaviour {
         public bool isSeeingPlayer;
         public bool hasSeenPlayer;
         public bool hasHeardPlayer;
+        public bool hearsGlobalAlert;
     }
 
     public enum AlertnessStates
@@ -41,6 +42,7 @@ public class AI_SensorySystem : MonoBehaviour {
     bool hasHeardPlayer;
     bool isSeeingPlayer;
     bool isSeenByPlayer;
+    bool hearsGlobalAlert;
 
     GameObject _player;
     AI_DecisionSystem _decision;
@@ -132,6 +134,7 @@ public class AI_SensorySystem : MonoBehaviour {
         info.isSeeingPlayer = isSeeingPlayer;
         info.hasSeenPlayer = hasSeenPlayer;
         info.hasHeardPlayer = hasHeardPlayer;
+        info.hearsGlobalAlert = hearsGlobalAlert;
         return info;
     }
 
@@ -150,6 +153,12 @@ public class AI_SensorySystem : MonoBehaviour {
 
             if(s.GetComponent<AI_Sound>().OwnerName == "Alert")
             {
+                GotoHighAlert();
+            }
+
+            if(s.GetComponent<AI_Sound>().OwnerName == "Global Alert")
+            {
+                hearsGlobalAlert = true;
                 GotoHighAlert();
             }
         }

@@ -78,7 +78,13 @@ public class AI_DecisionSystem : MonoBehaviour {
         }
 
         //TO BE FIXED WITH ACTUAL "LAST SEEN POSITION" SYSTEM
-        behaviour.Investigate(GameObject.Find("Player").transform);
+        if (info.hearsGlobalAlert)
+        {
+            behaviour.Investigate(GameObject.Find("Player").transform);
+        }else
+        {
+            behaviour.SoundAlarm();
+        }
     }
 
 
