@@ -28,6 +28,11 @@ public class AI_BehaviourCollection : MonoBehaviour {
         }
     }
 
+    public void Stop()
+    {
+        agent.isStopped = true;
+    }
+
     public void Shoot()
     {
         print("BANG BANG BANG PULLED MY DEVIL TRIGGER");
@@ -39,13 +44,12 @@ public class AI_BehaviourCollection : MonoBehaviour {
         print("MELEE");
     }
 
-    public void Investigate(Transform poi)
+    public void Investigate(Vector3 poi)
     {
-        //agent.destination = poi.position;
         Vector3 pos;
-        pos.x = poi.transform.position.x + TargetAvoidanceRadius * Mathf.Cos(Mathf.Deg2Rad * Random.Range(0, 360));
-        pos.y = poi.transform.position.y;
-        pos.z = poi.transform.position.z + TargetAvoidanceRadius * Mathf.Sin(Mathf.Deg2Rad * Random.Range(0, 360));
+        pos.x = poi.x + TargetAvoidanceRadius * Mathf.Cos(Mathf.Deg2Rad * Random.Range(0, 360));
+        pos.y = poi.y;
+        pos.z = poi.z + TargetAvoidanceRadius * Mathf.Sin(Mathf.Deg2Rad * Random.Range(0, 360));
 
         agent.destination = pos;
     }

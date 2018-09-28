@@ -3,12 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AI_SensorySystem : MonoBehaviour {
+    public struct PointOfInterest
+    {
+        public Vector3 position;
+        public bool isVisual;           //determines if it's sound or not
+        public AlertnessStates ThreatLevel;
+
+        public PointOfInterest(Vector3 pos, bool _isVisual, AlertnessStates _threat)
+        {
+            position = pos;
+            isVisual = _isVisual;
+            ThreatLevel = _threat;
+        }
+    }
+
     public struct SensoryInfo
     {
         public AlertnessStates _alertnessState;
         public int currentHealth;
         public int playerHealth;
-        public List<Transform> PointsOfInterest;
+        public List<PointOfInterest> poi;
         public bool isSeeingPlayer;
         public bool hasSeenPlayer;
         public bool hasHeardPlayer;
@@ -31,12 +45,13 @@ public class AI_SensorySystem : MonoBehaviour {
     public float UpdateRate;
     public AI_Sound AlertSound;
 
+    //Sensory Info
     AlertnessStates CurrentAlertnessState;
     float CurrentAlertnessLevel;
     List<GameObject> VisibleObjects;
     List<GameObject> RealSounds;
     List<GameObject> PseudoSounds;
-    List<Transform> pointsOfInterest = new List<Transform>();
+    List<PointOfInterest> pointsOfInterest = new List<PointOfInterest>();
 
     bool hasSeenPlayer;
     bool hasHeardPlayer;
@@ -44,6 +59,7 @@ public class AI_SensorySystem : MonoBehaviour {
     bool isSeenByPlayer;
     bool hearsGlobalAlert;
 
+    //Reuired objects and components
     GameObject _player;
     AI_DecisionSystem _decision;
     HealthController _hc;
@@ -115,7 +131,7 @@ public class AI_SensorySystem : MonoBehaviour {
         {
             isSeeingPlayer = true;
             hasSeenPlayer = true;
-            pointsOfInterest.Add(VisibleObjects[VisibleObjects.IndexOf(_player)].transform);
+            pointsOfInterest.Add(new PointOfInterest(VisibleObjects[VisibleObjects.IndexOf(_player)].transform.position, true, AlertnessStates.High));
         }else
         {
             isSeeingPlayer = false;
@@ -129,7 +145,7 @@ public class AI_SensorySystem : MonoBehaviour {
         info._alertnessState = CurrentAlertnessState;
         info.currentHealth = _hc.GetHealth();
         info.playerHealth = _player.GetComponent<HealthController>().GetHealth();
-        info.PointsOfInterest = pointsOfInterest;
+        info.poi = pointsOfInterest;
         pointsOfInterest.Clear();
         info.isSeeingPlayer = isSeeingPlayer;
         info.hasSeenPlayer = hasSeenPlayer;
@@ -148,11 +164,12 @@ public class AI_SensorySystem : MonoBehaviour {
             if(s.GetComponent<AI_Sound>().OwnerName == "Player")
             {
                 hasHeardPlayer = true;
-                pointsOfInterest.Add(s.transform);
+                pointsOfInterest.Add(new PointOfInterest(s.transform.position, false, AlertnessStates.Low));
             }
 
             if(s.GetComponent<AI_Sound>().OwnerName == "Alert")
             {
+                pointsOfInterest.Add(new PointOfInterest(s.transform.position, false, AlertnessStates.High));
                 GotoHighAlert();
             }
 
