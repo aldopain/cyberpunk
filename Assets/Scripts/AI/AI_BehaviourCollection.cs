@@ -6,13 +6,26 @@ public class AI_BehaviourCollection : MonoBehaviour {
     public Transform[] PatrolWayPoints;
     public AI_Alarm[] Alarms;
     public float TargetAvoidanceRadius;
-    int patrolDest = 0;
-    NavMeshAgent agent;
+    public float ApproachAngleError;
 
+    public GameObject DEBUG_DESTINATION_MARKER;
+
+    float _angleError;
+    float _currentAvoidanceRadius;
+    int patrolDest = 0;
+    Vector3 prevPOI;
+    Vector3 pos;
+    NavMeshAgent agent;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         SetupAgent();
+        _currentAvoidanceRadius = TargetAvoidanceRadius;
+    }
+
+    void Update()
+    {
+        DEBUG_DESTINATION_MARKER.transform.position = agent.destination;
     }
 
     void SetupAgent()
@@ -35,7 +48,6 @@ public class AI_BehaviourCollection : MonoBehaviour {
 
     public void Shoot()
     {
-        print("BANG BANG BANG PULLED MY DEVIL TRIGGER");
         GetComponentInChildren<GenericGun>().Shoot();
     }
 
@@ -44,14 +56,51 @@ public class AI_BehaviourCollection : MonoBehaviour {
         print("MELEE");
     }
 
-    public void Investigate(Vector3 poi)
+    public void Investigate(Vector3 poi, bool _aimAtPoi = true, bool _direct = false)
     {
-        Vector3 pos;
-        pos.x = poi.x + TargetAvoidanceRadius * Mathf.Cos(Mathf.Deg2Rad * Random.Range(0, 360));
-        pos.y = poi.y;
-        pos.z = poi.z + TargetAvoidanceRadius * Mathf.Sin(Mathf.Deg2Rad * Random.Range(0, 360));
+        if (_direct)
+        {
+            agent.isStopped = false;
+            agent.destination = poi;
+        }
+        else
+        {
+            if (Vector3.Distance(poi, prevPOI) > .3f)
+            {
+                agent.isStopped = false;
+                agent.updateRotation = true;
+                _currentAvoidanceRadius = TargetAvoidanceRadius;
+                _angleError = Random.Range(-ApproachAngleError / 2, ApproachAngleError / 2);
+            }
+            else
+            {
+                if(agent.remainingDistance < 0.5f)
+                {
+                    //_currentAvoidanceRadius /= 4;
+                    agent.isStopped = true;
+                    agent.updateRotation = false;
+                    transform.LookAt(poi);
+                }
+            }
 
-        agent.destination = pos;
+            pos = (transform.position - poi);
+            pos.Normalize();
+            pos *= _currentAvoidanceRadius;
+
+            //PUT ACTUAL VECTOR ROTATION HERE
+
+            agent.destination = pos + poi;
+        }
+
+        if (_aimAtPoi)
+        {
+            agent.updateRotation = false;
+            transform.LookAt(poi);
+        }else
+        {
+            agent.updateRotation = true;
+        }
+        prevPOI = poi;
     }
 
     public void SoundAlarm()

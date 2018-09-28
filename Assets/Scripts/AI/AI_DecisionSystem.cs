@@ -6,12 +6,17 @@ using UnityEngine.AI;
 public class AI_DecisionSystem : MonoBehaviour {
     public bool BlockingSensoryInfo;
     public float TEMP_MELEE_RANGE; //TO BE REPLACE WHEN ACTUAL MELEE COMPONENT IS COMPLETE
+    public int MaxIdleTicks;
 
     AI_SensorySystem.SensoryInfo info;
     AI_BehaviourCollection behaviour;
     GameObject _player;
 
     AI_SensorySystem.AlertnessStates prevState;
+    Vector3 prevPosition;
+    AI_SensorySystem.PointOfInterest prevPOI;
+    int _idleTicks;
+    bool _forceMovement;
     void Start()
     {
         behaviour = GetComponent<AI_BehaviourCollection>();
@@ -25,6 +30,7 @@ public class AI_DecisionSystem : MonoBehaviour {
         {
             prevState = info._alertnessState;
             info = _info;
+            HandleIdleTicks();
             MakeDecision();
         }else
         {
@@ -48,6 +54,30 @@ public class AI_DecisionSystem : MonoBehaviour {
         }
     }
     
+    void HandleIdleTicks()
+    {
+        if (transform.position == prevPosition)
+        {
+            _idleTicks++;
+        }
+        else
+        {
+            _idleTicks = 0;
+        }
+
+        if (_idleTicks > MaxIdleTicks)
+        {
+            _forceMovement = true;
+        }else
+        {
+            if (info.isSeeingPlayer)
+            {
+                _forceMovement = false;
+            }
+        }
+        prevPosition = transform.position;
+    }
+
     void CallBehaviour_Low()
     {
         behaviour.Patrol();
@@ -87,7 +117,7 @@ public class AI_DecisionSystem : MonoBehaviour {
         //TO BE FIXED WITH ACTUAL "LAST SEEN POSITION" SYSTEM
         if (info.hearsGlobalAlert)
         {
-            behaviour.Investigate(GameObject.Find("Player").transform.position);
+            behaviour.Investigate(ChooseTargetPOI(), info.isSeeingPlayer, _forceMovement);
         }else
         {
             behaviour.SoundAlarm();
@@ -97,6 +127,18 @@ public class AI_DecisionSystem : MonoBehaviour {
     Vector3 ChooseTargetPOI()
     {
         AI_SensorySystem.PointOfInterest[] poiArr = info.poi.ToArray();
+        if(poiArr.Length == 0)
+        {
+            if (prevPOI.position == Vector3.zero && prevPOI.ThreatLevel == AI_SensorySystem.AlertnessStates.Low && !prevPOI.isVisual)
+            {
+                print("What");
+                prevPOI.position = GameObject.Find("Player").transform.position;
+                return GameObject.Find("Player").transform.position;
+            }else
+            {
+                return prevPOI.position;
+            }
+        }
         AI_SensorySystem.PointOfInterest tmp = new AI_SensorySystem.PointOfInterest(Vector3.zero, false, AI_SensorySystem.AlertnessStates.Low);
 
         //Bubble sort by threat level

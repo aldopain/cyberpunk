@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AI_SensorySystem : MonoBehaviour {
+    [System.Serializable]
     public struct PointOfInterest
     {
         public Vector3 position;
