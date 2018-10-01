@@ -4,32 +4,61 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class AI_DecisionSystem : MonoBehaviour {
-    public bool BlockingSensoryInfo;
-    public float TEMP_MELEE_RANGE; //TO BE REPLACE WHEN ACTUAL MELEE COMPONENT IS COMPLETE
-    public int MaxIdleTicks;
+    public bool BlockingSensoryInfo;                //does this actor blocks the information coming from sensory System; is used to imitate the "stun" effect
+    public float TEMP_MELEE_RANGE;                  //TO BE REPLACED WHEN ACTUAL MELEE COMPONENT IS COMPLETE
+    public int MaxIdleTicks;                        //Maximum amount of sensory ticks actor is willing to wait until forcing itself to move
 
-    AI_SensorySystem.SensoryInfo info;
-    AI_BehaviourCollection behaviour;
-    GameObject _player;
+    AI_SensorySystem.SensoryInfo info;              //recieved Sensory Info that is processed this tick
+    AI_BehaviourCollection behaviour;               
+    GameObject _player;                             //TO BE FIXED: possibly redundant
 
-    AI_SensorySystem.AlertnessStates prevState;
-    Vector3 prevPosition;
-    AI_SensorySystem.PointOfInterest prevPOI;
+    AI_SensorySystem.AlertnessStates prevState;     
+    Vector3 prevPosition;                           //previous position of the actor; is used in counting idle ticks
+    AI_SensorySystem.PointOfInterest prevPOI;       //last POI; possibly deprecated
+    Vector3 lastSeenPlayer;
     int _idleTicks;
-    bool _forceMovement;
+    bool _forceMovement;            
+
+    //Initial Setup
     void Start()
     {
         behaviour = GetComponent<AI_BehaviourCollection>();
-        _player = GameObject.Find("Player");
+        _player = GameObject.Find("Player");                    //TO BE FIXED: possibly redundant
         prevState = AI_SensorySystem.AlertnessStates.Low;
     }
 
+    //TO BE FIXED:
+    //Needs better system for clearing already visited points of interest
+    //Update shouldn't be used for actual actor manipulation
+    void Update()
+    {
+        if(prevPOI.position != Vector3.zero && info._alertnessState == AI_SensorySystem.AlertnessStates.High && behaviour.isNear(prevPOI.position))
+        {
+            print("Clears POI");
+            prevPOI.position = Vector3.zero;
+            prevPOI.isVisual = false;
+            prevPOI.ThreatLevel = AI_SensorySystem.AlertnessStates.Low;
+        }
+
+        if (behaviour.isNear(lastSeenPlayer))
+        {
+            lastSeenPlayer = Vector3.zero;
+        }
+    }
+
+    //Function that is called by Sensory System to send its info here
     public void RecieveSensoryInfo(AI_SensorySystem.SensoryInfo _info)
     {
         if (!BlockingSensoryInfo)
         {
             prevState = info._alertnessState;
             info = _info;
+
+            if (info.isSeeingPlayer)
+            {
+                lastSeenPlayer = _player.transform.position;
+            }
+
             HandleIdleTicks();
             MakeDecision();
         }else
@@ -38,6 +67,7 @@ public class AI_DecisionSystem : MonoBehaviour {
         }
     }
 
+    //Choose one of three behaviour branches depending on alertness state
     void MakeDecision()
     {
         switch (info._alertnessState)
@@ -54,6 +84,7 @@ public class AI_DecisionSystem : MonoBehaviour {
         }
     }
     
+    //Counts idle ticks and force actor's movement
     void HandleIdleTicks()
     {
         if (transform.position == prevPosition)
@@ -78,31 +109,51 @@ public class AI_DecisionSystem : MonoBehaviour {
         prevPosition = transform.position;
     }
 
+    /* Calls low alertness behavior
+     * 
+     * For now it always patrols; TO BE FIXED with different behaviours
+     * 
+     */
     void CallBehaviour_Low()
     {
+        if (_forceMovement)
+        {
+            behaviour.ForceStart();
+        }
         behaviour.Patrol();
     }
 
+    // Calls medium alertness behaviour
     void CallBehaviour_Medium()
     {
-        if (info.hasSeenPlayer && !info.isSeeingPlayer)
+        if (!info.isSeeingPlayer)
         {
-            //TO BE FIXED WITH ACTUAL "LAST SEEN POSITION" SYSTEM
-            behaviour.Investigate(GameObject.Find("Player").transform.position);
-        }
+            if(lastSeenPlayer == Vector3.zero)
+            {
+                print("Patroling");
+                behaviour.Patrol();
+            }else
+            {
+                print("Going to the last player position");
+                behaviour.Investigate(lastSeenPlayer, false, _forceMovement);
+            }
 
-        if (info.hasHeardPlayer)
+            return;
+        }else
         {
-            behaviour.Investigate(info.poi[0].position);
+            //Debug.Break();
+            print("Following player");
+            behaviour.Investigate(_player.transform.position, false, _forceMovement);
             return;
         }
 
         behaviour.Patrol();
     }
 
+    // Calls high alert behaviour
     void CallBehaviour_High()
     {
-        if(info.isSeeingPlayer && Vector3.Distance(transform.position, GameObject.Find("Player").transform.position) < TEMP_MELEE_RANGE)
+        if(info.isSeeingPlayer && Vector3.Distance(transform.position, GameObject.Find("Player").transform.position) < TEMP_MELEE_RANGE)        //If can see player
         {
             behaviour.Melee();
             return;
@@ -111,34 +162,47 @@ public class AI_DecisionSystem : MonoBehaviour {
         if (info.isSeeingPlayer)
         {
             behaviour.Shoot();
+            behaviour.Investigate(_player.transform.position, true, _forceMovement);
             return;
         }
 
-        //TO BE FIXED WITH ACTUAL "LAST SEEN POSITION" SYSTEM
-        if (info.hearsGlobalAlert)
+        if (info.hearsGlobalAlert)                                                                                                              //if can't see player
         {
-            behaviour.Investigate(ChooseTargetPOI(), info.isSeeingPlayer, _forceMovement);
+            if (lastSeenPlayer == Vector3.zero)
+            {
+                behaviour.Investigate(_player.transform.position, false, _forceMovement);
+            }
+            else
+            {
+                behaviour.Investigate(lastSeenPlayer, false, _forceMovement);
+            }
         }else
         {
             behaviour.SoundAlarm();
         }
     }
     
+
+
+    //Chooses most important point of interest
     Vector3 ChooseTargetPOI()
     {
         AI_SensorySystem.PointOfInterest[] poiArr = info.poi.ToArray();
+
+        //if no pois detected
         if(poiArr.Length == 0)
         {
+            print("have no pois to work with");
             if (prevPOI.position == Vector3.zero && prevPOI.ThreatLevel == AI_SensorySystem.AlertnessStates.Low && !prevPOI.isVisual)
             {
-                print("What");
-                prevPOI.position = GameObject.Find("Player").transform.position;
-                return GameObject.Find("Player").transform.position;
+                return Vector3.zero;
             }else
             {
                 return prevPOI.position;
             }
         }
+
+        print("have pois to work with");
         AI_SensorySystem.PointOfInterest tmp = new AI_SensorySystem.PointOfInterest(Vector3.zero, false, AI_SensorySystem.AlertnessStates.Low);
 
         //Bubble sort by threat level
@@ -204,6 +268,7 @@ public class AI_DecisionSystem : MonoBehaviour {
             }
         }
 
+        prevPOI.position = target;
         return target;
     }
 }

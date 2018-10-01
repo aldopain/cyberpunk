@@ -211,7 +211,7 @@ public class AI_SensorySystem : MonoBehaviour {
             CurrentAlertnessState = AlertnessStates.Medium;
         }
 
-        CurrentAlertnessLevel = TimeToHighAlert - 0.01f;
+        CurrentAlertnessLevel = TimeToMediumAlert - 0.01f;
     }
 
     public void GotoHighAlert()
@@ -225,11 +225,7 @@ public class AI_SensorySystem : MonoBehaviour {
         CurrentAlertnessLevel = MaxAlertness;
     }
 
-    public void ForceAlertness(AlertnessStates state)
-    {
-        CurrentAlertnessState = state;
-    }
-
+    //returns alertness state
     public string GetCurrentAlertnessState()
     {
         switch (CurrentAlertnessState)
@@ -245,6 +241,7 @@ public class AI_SensorySystem : MonoBehaviour {
         }
     }
 
+    //returns alertness level
     public float GetCurrentAlertnessLevel()
     {
         return CurrentAlertnessLevel;

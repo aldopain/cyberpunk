@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AI_VisionSystem : MonoBehaviour {
     [Header("Settings")]
-    public LayerMask DetectableLayers;
+    public LayerMask ObstacleLayers;
     public bool isBlind;
 
     [Header("System")]
@@ -25,18 +25,21 @@ public class AI_VisionSystem : MonoBehaviour {
     }
 
     //Returns true if other transform with layer Environment can be hit with a ray
-    bool DetectVisibility (Transform other) {
+    bool DetectVisibility(Transform other) {
         Vector3 ThisCharacterPosition = GetComponentInParent<Transform>().position;
         RaycastHit hit;
-        Physics.Linecast (ThisCharacterPosition, other.position, out hit, (1 << 9));
-        return (hit.collider == null);
+        if (Physics.Linecast(ThisCharacterPosition, other.position, out hit, ObstacleLayers))
+        {
+            return (hit.collider.gameObject.tag == "Player");
+        }else{
+            return false;
+        }
     }
 
     void OnTriggerEnter(Collider other) {
         if (!isBlind) {
             ObjectsInCone.Add(other.gameObject);
             if (DetectVisibility(other.transform)) {
-                print ("I SEE U");
                 ObjectsInVision.Add(other.gameObject);
             }
         }
@@ -45,7 +48,6 @@ public class AI_VisionSystem : MonoBehaviour {
     void OnTriggerExit(Collider other) {
         ObjectsInCone.Remove(other.gameObject);
         if (ObjectsInVision.Contains(other.gameObject)) {
-            print ("I DONT SEE U");
             ObjectsInVision.Remove(other.gameObject);
         }
     }

@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 53115274}
   m_Layer: 9
   m_Name: Cube (6)
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -564,7 +564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxAlertness: 10
-  TimeToMediumAlert: 1
+  TimeToMediumAlert: 0.5
   TimeToHighAlert: 3
   UpdateRate: 0.1
   AlertSound: {fileID: 114313970011475634, guid: 662b84c26908faa4b9c2b634243e904b,
@@ -730,7 +730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14a38c79430945d45b79038d84c92dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: 'Alertness state: *AI_SensorySystem.GetCurrentAlertnessState*'
+  Text: 'Alertness: *AI_SensorySystem.GetCurrentAlertnessState*'
   Output: {fileID: 1959787929}
 --- !u!1 &791276288
 GameObject:
@@ -845,7 +845,7 @@ GameObject:
   - component: {fileID: 880526997}
   m_Layer: 9
   m_Name: Cube (3)
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -930,7 +930,7 @@ GameObject:
   - component: {fileID: 957217784}
   m_Layer: 9
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -1090,7 +1090,7 @@ GameObject:
   - component: {fileID: 1129106271}
   m_Layer: 9
   m_Name: Cube (8)
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -1329,9 +1329,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d79fe8f2f1f5614b92dd3c4c09de31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DetectableLayers:
+  ObstacleLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
   isBlind: 0
   SensorySystem: {fileID: 1569180757}
 --- !u!65 &1318835396
@@ -1431,9 +1431,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d79fe8f2f1f5614b92dd3c4c09de31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DetectableLayers:
+  ObstacleLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 4294967295
   isBlind: 0
   SensorySystem: {fileID: 790847856}
 --- !u!65 &1363865184
@@ -1531,7 +1531,7 @@ GameObject:
   - component: {fileID: 1486248369}
   m_Layer: 9
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -1616,7 +1616,7 @@ GameObject:
   - component: {fileID: 1486280838}
   m_Layer: 9
   m_Name: Cube (7)
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -1825,7 +1825,7 @@ GameObject:
   - component: {fileID: 1523021753}
   m_Layer: 9
   m_Name: Cube (4)
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -2374,7 +2374,7 @@ GameObject:
   - component: {fileID: 1682775983}
   m_Layer: 9
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -2683,7 +2683,7 @@ Prefab:
     - target: {fileID: 136691209166942706, guid: 27b2ef822ca95744da9e77ef75d164c7,
         type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 136691209166942706, guid: 27b2ef822ca95744da9e77ef75d164c7,
         type: 2}
@@ -2847,7 +2847,7 @@ GameObject:
   - component: {fileID: 2064709197}
   m_Layer: 9
   m_Name: LevelEnvironment
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2887,7 +2887,7 @@ GameObject:
   - component: {fileID: 2146721081}
   m_Layer: 9
   m_Name: Cube (5)
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8

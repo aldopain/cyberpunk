@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Triggers
   - Bullet
+  - Environment
   layers:
   - Default
   - TransparentFX
