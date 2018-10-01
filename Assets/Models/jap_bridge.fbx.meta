@@ -1,14 +1,14 @@
 fileFormatVersion: 2
-guid: acb956d0ffcea8e4b937418990a3f176
+guid: d62c9048908a12845b218d5d7d6974b0
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: Material
+    2100000: Material.001
     2300000: //RootNode
     3300000: //RootNode
-    4300000: baked
+    4300000: jap_brige
   externalObjects: {}
   materials:
     importMaterials: 1
