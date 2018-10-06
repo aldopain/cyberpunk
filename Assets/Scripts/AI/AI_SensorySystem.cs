@@ -3,27 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AI_SensorySystem : MonoBehaviour {
-    [System.Serializable]
-    public struct PointOfInterest
-    {
-        public Vector3 position;
-        public bool isVisual;           //determines if it's sound or not
-        public AlertnessStates ThreatLevel;
 
-        public PointOfInterest(Vector3 pos, bool _isVisual, AlertnessStates _threat)
-        {
-            position = pos;
-            isVisual = _isVisual;
-            ThreatLevel = _threat;
-        }
-    }
-
+    //Struct that is send to the Decision System
     public struct SensoryInfo
     {
         public AlertnessStates _alertnessState;
         public int currentHealth;
         public int playerHealth;
-        public List<PointOfInterest> poi;
         public bool isSeeingPlayer;
         public bool hasSeenPlayer;
         public bool hasHeardPlayer;
@@ -52,15 +38,15 @@ public class AI_SensorySystem : MonoBehaviour {
     List<GameObject> VisibleObjects;
     List<GameObject> RealSounds;
     List<GameObject> PseudoSounds;
-    List<PointOfInterest> pointsOfInterest = new List<PointOfInterest>();
 
+    //Flags that store info about important events and conditions
     bool hasSeenPlayer;
     bool hasHeardPlayer;
     bool isSeeingPlayer;
     bool isSeenByPlayer;
     bool hearsGlobalAlert;
 
-    //Reuired objects and components
+    //Required objects and components
     GameObject _player;
     AI_DecisionSystem _decision;
     HealthController _hc;
@@ -79,6 +65,7 @@ public class AI_SensorySystem : MonoBehaviour {
         StartCoroutine(SendInfo());
 	}
 
+    //Compile and send sensory info to the Decision System
     IEnumerator SendInfo()
     {
         while (true)
@@ -90,41 +77,42 @@ public class AI_SensorySystem : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (isSeeingPlayer)
+        if (isSeeingPlayer)                                                     //Increase alertness if is seeing player
         {
             IncreaseAlertness();
 
-            if(CurrentAlertnessLevel > TimeToMediumAlert)
+            if(CurrentAlertnessLevel > TimeToMediumAlert)                       
             {
                 if(CurrentAlertnessLevel > TimeToHighAlert)
                 {
-                    if(CurrentAlertnessState != AlertnessStates.High)
+                    if(CurrentAlertnessState != AlertnessStates.High)           //Move to high alert if alertness level is high enough
                         GotoHighAlert();
                 }else
                 {
-                    if (CurrentAlertnessState != AlertnessStates.Medium)
+                    if (CurrentAlertnessState != AlertnessStates.Medium)        //Move to medium alert if alertness level is high enough
                         GotoMediumAlert();
                 }
             }
         }else
         {
-            DecreaseAlertness(.5f);
+            DecreaseAlertness(2f);                                              //Decrease alerntess if is seeing player
             if (CurrentAlertnessLevel < TimeToHighAlert)
             {
                 if (CurrentAlertnessLevel < TimeToMediumAlert)
                 {
-                    if (CurrentAlertnessState != AlertnessStates.Low)
+                    if (CurrentAlertnessState != AlertnessStates.Low)           //Move to low alert if alertness level is low enough
                         GotoLowAlert();
                 }
                 else
                 {
-                    if (CurrentAlertnessState != AlertnessStates.Medium)
+                    if (CurrentAlertnessState != AlertnessStates.Medium)        //Move to medium alert if alertness level is low enough
                         GotoMediumAlert();
                 }
             }
         }
 	}
 
+    //This function is used by a Vision System to send vision info
     public void RecieveVision(List<GameObject> visibleObjects)
     {
         VisibleObjects = visibleObjects;
@@ -132,13 +120,17 @@ public class AI_SensorySystem : MonoBehaviour {
         {
             isSeeingPlayer = true;
             hasSeenPlayer = true;
-            pointsOfInterest.Add(new PointOfInterest(VisibleObjects[VisibleObjects.IndexOf(_player)].transform.position, true, AlertnessStates.High));
+            if(CurrentAlertnessState == AlertnessStates.High)
+            {
+                CurrentAlertnessLevel = MaxAlertness;
+            }
         }else
         {
             isSeeingPlayer = false;
         }
     }
 
+    //Compiles all available info into one struct
     SensoryInfo CompileSensoryInfo()
     {
         SensoryInfo info = new SensoryInfo();
@@ -146,8 +138,6 @@ public class AI_SensorySystem : MonoBehaviour {
         info._alertnessState = CurrentAlertnessState;
         info.currentHealth = _hc.GetHealth();
         info.playerHealth = _player.GetComponent<HealthController>().GetHealth();
-        info.poi = pointsOfInterest;
-        pointsOfInterest.Clear();
         info.isSeeingPlayer = isSeeingPlayer;
         info.hasSeenPlayer = hasSeenPlayer;
         info.hasHeardPlayer = hasHeardPlayer;
@@ -155,45 +145,53 @@ public class AI_SensorySystem : MonoBehaviour {
         return info;
     }
 
+    //This function is used by a Hearing System to send audio info
     public void RecieveSounds(List<GameObject> real, List<GameObject> pseudo)
     {
         RealSounds = real;
         PseudoSounds = pseudo;
-
-        foreach(GameObject s in RealSounds)
+        CheckRecievedSounds();
+    }
+    
+    //is used in RecieveSounds; checks owners of recieved sounds and triggers appropriate events
+    void CheckRecievedSounds()
+    {
+        hearsGlobalAlert = false;
+        foreach (GameObject s in RealSounds)
         {
-            if(s.GetComponent<AI_Sound>().OwnerName == "Player")
+            if (s.GetComponent<AI_Sound>().OwnerName == "Player")
             {
                 hasHeardPlayer = true;
-                pointsOfInterest.Add(new PointOfInterest(s.transform.position, false, AlertnessStates.Low));
             }
 
-            if(s.GetComponent<AI_Sound>().OwnerName == "Alert")
+            if (s.GetComponent<AI_Sound>().OwnerName == "Alert")
             {
-                pointsOfInterest.Add(new PointOfInterest(s.transform.position, false, AlertnessStates.High));
                 GotoHighAlert();
             }
 
-            if(s.GetComponent<AI_Sound>().OwnerName == "Global Alert")
+            if (s.GetComponent<AI_Sound>().OwnerName == "Global Alert")
             {
                 hearsGlobalAlert = true;
                 GotoHighAlert();
             }
         }
     }
-    
+
+    //Increase alertness if it's not max already
     void IncreaseAlertness(float multiplier = 1f)
     {
         if(CurrentAlertnessLevel < MaxAlertness)
             CurrentAlertnessLevel += Time.deltaTime * multiplier;
     }
 
+    //Decrease alertness if it's not 0 already
     void DecreaseAlertness(float multiplier = 1f)
     {
         if (CurrentAlertnessLevel > 0)
             CurrentAlertnessLevel -= Time.deltaTime * multiplier;
     }
 
+    //Set alertness states
     public void GotoLowAlert()
     {
         if (CurrentAlertnessState != AlertnessStates.Low)

@@ -9,40 +9,42 @@ public class AI_BehaviourCollection : MonoBehaviour {
     public float TargetAvoidanceRadius;         //Distance to the player
     public float ApproachAngleError;            //Used for slight path variation
 
-    [Header("DEBUG")]
-    public GameObject DEBUG_DESTINATION_MARKER;
-
-
     private float _angleError;
     private float _currentAvoidanceRadius;
     private int patrolDest = 0;
     private Vector3 prevPOI;
     private Vector3 pos;
     private NavMeshAgent agent;
+    private Vector2Int patrolAroundWaypoints;      //Indicies of patrol waypoints used by PatrolAround
+    int patrolAroundDest;
+    private Vector3 partolAround_LastPoint;
+
+    void Awake()
+    {
+        Random.InitState(System.DateTime.Now.Millisecond);
+    }
 
     //Sets up initial variables
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         SetupAgent();
-        _currentAvoidanceRadius = TargetAvoidanceRadius;
-    }
-
-    //Default Update is not needed for AI to function, used only for debugging
-    void Update()
-    {
-        DEBUG_DESTINATION_MARKER.transform.position = agent.destination;
     }
 
     //More default settings that would be applied at the start should go here
     void SetupAgent()
     {
         agent.autoBraking = false;
+        _angleError = Random.Range(-ApproachAngleError / 2, ApproachAngleError / 2);
+        _currentAvoidanceRadius = TargetAvoidanceRadius;
+        patrolAroundWaypoints = new Vector2Int(-1, -1);
     }
 
     //Patrol behaviour
     public void Patrol()
     {
+        agent.isStopped = false;
+        agent.updateRotation = true;
         if (!agent.pathPending && isOnPatrolWaypoint())
         {
             GotoNextPatrolPoint();
@@ -58,6 +60,61 @@ public class AI_BehaviourCollection : MonoBehaviour {
         }
         agent.destination = PatrolWayPoints[patrolDest].position;
         patrolDest = (patrolDest + 1) % PatrolWayPoints.Length;
+    }
+
+    //Patrol between two points, defined by PatrolAround_BuildPath
+    public void PatrolAround()
+    {
+        agent.isStopped = false;
+        agent.updateRotation = true;
+
+        if (patrolAroundWaypoints == new Vector2(-1, -1))
+        {
+            patrolAroundWaypoints = new Vector2Int(0, 1);
+            patrolAroundDest = patrolAroundWaypoints.x;
+        }
+
+        if(!agent.pathPending && isOnPatrolWaypoint())
+        {
+            if(patrolAroundDest == patrolAroundWaypoints.x)
+            {
+                patrolAroundDest = patrolAroundWaypoints.y;
+                patrolDest = patrolAroundWaypoints.y;
+            }else
+            {
+                patrolAroundDest = patrolAroundWaypoints.x;
+                patrolDest = patrolAroundWaypoints.x;
+            }
+        }
+
+        agent.destination = PatrolWayPoints[patrolAroundDest].position;
+    }
+
+    //Find two patrol waypoints closest to the Vector3 point
+    public void PatrolAround_BuildPath(Vector3 point)
+    {
+        int closestIndex = 0;
+        int secondClosestIndex = 0;
+        for(int i = 0; i < PatrolWayPoints.Length; i++)
+        {
+            if(Vector3.Distance(point, PatrolWayPoints[i].position) < Vector3.Distance(point, PatrolWayPoints[closestIndex].position))
+            {
+                secondClosestIndex = closestIndex;
+                closestIndex = i;
+            }else if (Vector3.Distance(point, PatrolWayPoints[i].position) < Vector3.Distance(point, PatrolWayPoints[secondClosestIndex].position))
+            {
+                secondClosestIndex = i;
+            }
+        }
+
+        patrolAroundWaypoints.x = closestIndex;
+        patrolAroundWaypoints.y = secondClosestIndex;
+    }
+
+    //For use in-editor
+    public void PatrolAround_BuildPath()
+    {
+        PatrolAround_BuildPath(GameObject.Find("Player").transform.position);
     }
 
     //Immideatly stops agent
@@ -81,6 +138,15 @@ public class AI_BehaviourCollection : MonoBehaviour {
     public void Melee()
     {
         print("MELEE");
+    }
+
+    //For use in editor.
+    //Force agent to look at the player
+    public void FacePlayer()
+    {
+        agent.isStopped = true;
+        agent.updateRotation = false;
+        transform.LookAt(GameObject.Find("Player").transform);
     }
 
     //Goes to the specified point
@@ -114,7 +180,10 @@ public class AI_BehaviourCollection : MonoBehaviour {
             pos.Normalize();
             pos *= _currentAvoidanceRadius;
 
-            //PUT ACTUAL VECTOR ROTATION HERE                                                   //randomizing the approach angle so agents would take different paths
+            Vector3 posr;                                                                       //randomizing the approach angle so agents would take different paths
+            posr.x = pos.x * Mathf.Cos(_angleError) - pos.z * Mathf.Sin(_angleError);
+            posr.y = pos.y;
+            posr.z = pos.x * Mathf.Sin(_angleError) - pos.z * Mathf.Cos(_angleError);
 
             agent.destination = pos + poi;
         }
@@ -133,6 +202,8 @@ public class AI_BehaviourCollection : MonoBehaviour {
     //Trigger closest alarm
     public void SoundAlarm()
     {
+        agent.isStopped = false;
+        agent.updateRotation = true;
         Transform closestAlarm = Alarms[0].transform;
         for(int i = 0; i < Alarms.Length; i++)
         {

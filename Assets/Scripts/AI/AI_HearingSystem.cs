@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class AI_HearingSystem : MonoBehaviour {
     [Header("Settings")]
-    public float DetectionRadius;
-    public LayerMask DetectionMask;
-    public bool isDeaf;
+    public float DetectionRadius;                           // Radius of the Overlap Sphere
+    public LayerMask DetectionMask;                         // 
+    public bool isDeaf;                                     // Does this agent recieve sound
 
-    List<GameObject> RealSounds = new List<GameObject>();
+    List<GameObject> RealSounds = new List<GameObject>();       
     List<GameObject> PseudoSounds = new List<GameObject>();
 
     AI_SensorySystem SensorySystem;
