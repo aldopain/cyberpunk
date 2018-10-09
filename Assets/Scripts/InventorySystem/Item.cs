@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Item : MonoBehaviour {
-	public Sprite Icon;
-	public int HeightInCells;
-	public int WidthInCells;
+    public string itemName;
+    public Texture itemTexture;
+    public int width;
+    public int height;
 
 	// Use this for initialization
 	void Start () {
