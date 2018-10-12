@@ -53,6 +53,7 @@ public class Bullet : MonoBehaviour
             if (other.GetComponent<HealthController>() != null)
             {
                 other.GetComponent<HealthController>().ChangeHealth(-Mathf.Abs(Damage));
+                other.GetComponent<HealthController>().OnHit.Invoke();
                 TransmitComponents(other.gameObject);
             }
 

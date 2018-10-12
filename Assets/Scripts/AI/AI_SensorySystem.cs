@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AI_SensorySystem : MonoBehaviour {
+
+    //Struct that is send to the Decision System
     public struct SensoryInfo
     {
         public AlertnessStates _alertnessState;
         public int currentHealth;
         public int playerHealth;
-        public List<Transform> PointsOfInterest;
         public bool isSeeingPlayer;
         public bool hasSeenPlayer;
         public bool hasHeardPlayer;
+        public bool hearsGlobalAlert;
     }
 
     public enum AlertnessStates
@@ -28,19 +30,23 @@ public class AI_SensorySystem : MonoBehaviour {
 
     [Header("System")]
     public float UpdateRate;
+    public AI_Sound AlertSound;
 
+    //Sensory Info
     AlertnessStates CurrentAlertnessState;
     float CurrentAlertnessLevel;
     List<GameObject> VisibleObjects;
     List<GameObject> RealSounds;
     List<GameObject> PseudoSounds;
-    List<Transform> pointsOfInterest = new List<Transform>();
 
+    //Flags that store info about important events and conditions
     bool hasSeenPlayer;
     bool hasHeardPlayer;
     bool isSeeingPlayer;
     bool isSeenByPlayer;
+    bool hearsGlobalAlert;
 
+    //Required objects and components
     GameObject _player;
     AI_DecisionSystem _decision;
     HealthController _hc;
@@ -59,6 +65,7 @@ public class AI_SensorySystem : MonoBehaviour {
         StartCoroutine(SendInfo());
 	}
 
+    //Compile and send sensory info to the Decision System
     IEnumerator SendInfo()
     {
         while (true)
@@ -70,41 +77,42 @@ public class AI_SensorySystem : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (isSeeingPlayer)
+        if (isSeeingPlayer)                                                     //Increase alertness if is seeing player
         {
             IncreaseAlertness();
 
-            if(CurrentAlertnessLevel > TimeToMediumAlert)
+            if(CurrentAlertnessLevel > TimeToMediumAlert)                       
             {
                 if(CurrentAlertnessLevel > TimeToHighAlert)
                 {
-                    if(CurrentAlertnessState != AlertnessStates.High)
+                    if(CurrentAlertnessState != AlertnessStates.High)           //Move to high alert if alertness level is high enough
                         GotoHighAlert();
                 }else
                 {
-                    if (CurrentAlertnessState != AlertnessStates.Medium)
+                    if (CurrentAlertnessState != AlertnessStates.Medium)        //Move to medium alert if alertness level is high enough
                         GotoMediumAlert();
                 }
             }
         }else
         {
-            DecreaseAlertness(.5f);
+            DecreaseAlertness(2f);                                              //Decrease alerntess if is seeing player
             if (CurrentAlertnessLevel < TimeToHighAlert)
             {
                 if (CurrentAlertnessLevel < TimeToMediumAlert)
                 {
-                    if (CurrentAlertnessState != AlertnessStates.Low)
+                    if (CurrentAlertnessState != AlertnessStates.Low)           //Move to low alert if alertness level is low enough
                         GotoLowAlert();
                 }
                 else
                 {
-                    if (CurrentAlertnessState != AlertnessStates.Medium)
+                    if (CurrentAlertnessState != AlertnessStates.Medium)        //Move to medium alert if alertness level is low enough
                         GotoMediumAlert();
                 }
             }
         }
 	}
 
+    //This function is used by a Vision System to send vision info
     public void RecieveVision(List<GameObject> visibleObjects)
     {
         VisibleObjects = visibleObjects;
@@ -112,13 +120,17 @@ public class AI_SensorySystem : MonoBehaviour {
         {
             isSeeingPlayer = true;
             hasSeenPlayer = true;
-            pointsOfInterest.Add(VisibleObjects[VisibleObjects.IndexOf(_player)].transform);
+            if(CurrentAlertnessState == AlertnessStates.High)
+            {
+                CurrentAlertnessLevel = MaxAlertness;
+            }
         }else
         {
             isSeeingPlayer = false;
         }
     }
 
+    //Compiles all available info into one struct
     SensoryInfo CompileSensoryInfo()
     {
         SensoryInfo info = new SensoryInfo();
@@ -126,58 +138,110 @@ public class AI_SensorySystem : MonoBehaviour {
         info._alertnessState = CurrentAlertnessState;
         info.currentHealth = _hc.GetHealth();
         info.playerHealth = _player.GetComponent<HealthController>().GetHealth();
-        info.PointsOfInterest = pointsOfInterest;
-        pointsOfInterest.Clear();
         info.isSeeingPlayer = isSeeingPlayer;
         info.hasSeenPlayer = hasSeenPlayer;
         info.hasHeardPlayer = hasHeardPlayer;
+        info.hearsGlobalAlert = hearsGlobalAlert;
         return info;
     }
 
+    //This function is used by a Hearing System to send audio info
     public void RecieveSounds(List<GameObject> real, List<GameObject> pseudo)
     {
         RealSounds = real;
         PseudoSounds = pseudo;
-
-        foreach(GameObject s in RealSounds)
+        CheckRecievedSounds();
+    }
+    
+    //is used in RecieveSounds; checks owners of recieved sounds and triggers appropriate events
+    void CheckRecievedSounds()
+    {
+        hearsGlobalAlert = false;
+        foreach (GameObject s in RealSounds)
         {
-            if(s.GetComponent<AI_Sound>().OwnerName == "Player")
+            if (s.GetComponent<AI_Sound>().OwnerName == "Player")
             {
                 hasHeardPlayer = true;
-                pointsOfInterest.Add(s.transform);
+            }
+
+            if (s.GetComponent<AI_Sound>().OwnerName == "Alert")
+            {
+                GotoHighAlert();
+            }
+
+            if (s.GetComponent<AI_Sound>().OwnerName == "Global Alert")
+            {
+                hearsGlobalAlert = true;
+                GotoHighAlert();
             }
         }
     }
-    
+
+    //Increase alertness if it's not max already
     void IncreaseAlertness(float multiplier = 1f)
     {
         if(CurrentAlertnessLevel < MaxAlertness)
             CurrentAlertnessLevel += Time.deltaTime * multiplier;
     }
 
+    //Decrease alertness if it's not 0 already
     void DecreaseAlertness(float multiplier = 1f)
     {
         if (CurrentAlertnessLevel > 0)
             CurrentAlertnessLevel -= Time.deltaTime * multiplier;
     }
 
-    void GotoLowAlert()
+    //Set alertness states
+    public void GotoLowAlert()
     {
-        CurrentAlertnessState = AlertnessStates.Medium;
+        if (CurrentAlertnessState != AlertnessStates.Low)
+        {
+            CurrentAlertnessState = AlertnessStates.Low;
+        }
+
+        CurrentAlertnessLevel = 0;
     }
 
-    void GotoMediumAlert()
+    public void GotoMediumAlert()
     {
-        CurrentAlertnessState = AlertnessStates.Medium;
+        if (CurrentAlertnessState != AlertnessStates.Medium)
+        {
+            CurrentAlertnessState = AlertnessStates.Medium;
+        }
+
+        CurrentAlertnessLevel = TimeToMediumAlert - 0.01f;
     }
 
-    void GotoHighAlert()
+    public void GotoHighAlert()
     {
-        CurrentAlertnessState = AlertnessStates.High;
+        if(CurrentAlertnessState != AlertnessStates.High)
+        {
+            CurrentAlertnessState = AlertnessStates.High;
+            Destroy(Instantiate(AlertSound, transform.position, transform.rotation), 1);
+        }
+
+        CurrentAlertnessLevel = MaxAlertness;
     }
 
-    public void ForceAlertness(AlertnessStates state)
+    //returns alertness state
+    public string GetCurrentAlertnessState()
     {
-        CurrentAlertnessState = state;
+        switch (CurrentAlertnessState)
+        {
+            case AlertnessStates.High:
+                return "High";
+            case AlertnessStates.Medium:
+                return "Medium";
+            case AlertnessStates.Low:
+                return "Low";
+            default:
+                return "BUG";
+        }
+    }
+
+    //returns alertness level
+    public float GetCurrentAlertnessLevel()
+    {
+        return CurrentAlertnessLevel;
     }
 }

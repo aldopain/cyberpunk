@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AI_VisionSystem : MonoBehaviour {
     [Header("Settings")]
-    public LayerMask DetectableLayers;
+    public LayerMask EnvironmentLayer;
     public bool isBlind;
 
     [Header("System")]
@@ -18,7 +18,8 @@ public class AI_VisionSystem : MonoBehaviour {
     }
 
     IEnumerator SendVision() {
-        while (true) {
+        while (true)
+        {
             yield return new WaitForSeconds(SensorySystem.UpdateRate);
             SensorySystem.RecieveVision(ObjectsInVision);
         }
@@ -26,17 +27,25 @@ public class AI_VisionSystem : MonoBehaviour {
 
     //Returns true if other transform with layer Environment can be hit with a ray
     bool DetectVisibility (Transform other) {
-        Vector3 ThisCharacterPosition = GetComponentInParent<Transform>().position;
+        return DetectVisibility (other.position);
+    }
+
+    bool DetectVisibility (GameObject go) {
+        return DetectVisibility (gameObject.transform.position);
+    }
+
+    bool DetectVisibility (Vector3 position) {
         RaycastHit hit;
-        Physics.Linecast (ThisCharacterPosition, other.position, out hit, (1 << 9));
+        Physics.Linecast(transform.parent.position, position, out hit, EnvironmentLayer);
         return (hit.collider == null);
     }
 
     void OnTriggerEnter(Collider other) {
-        if (!isBlind) {
+        if (!isBlind)
+        {
             ObjectsInCone.Add(other.gameObject);
-            if (DetectVisibility(other.transform)) {
-                print ("I SEE U");
+            if (DetectVisibility(other.transform))
+            {
                 ObjectsInVision.Add(other.gameObject);
             }
         }
@@ -44,9 +53,22 @@ public class AI_VisionSystem : MonoBehaviour {
 
     void OnTriggerExit(Collider other) {
         ObjectsInCone.Remove(other.gameObject);
-        if (ObjectsInVision.Contains(other.gameObject)) {
-            print ("I DONT SEE U");
+        if (ObjectsInVision.Contains(other.gameObject))
+        {
             ObjectsInVision.Remove(other.gameObject);
+        }
+    }
+
+    void Update() {
+        var tmpVision = new List<GameObject>(ObjectsInVision);
+        var tmpCone = new List<GameObject>(ObjectsInCone);
+        foreach (var obj in tmpVision) {
+            if (obj != null && !DetectVisibility (obj))
+                ObjectsInVision.Remove (obj);
+        }
+        foreach (var obj in tmpCone) {
+            if (obj != null && DetectVisibility (obj) && !ObjectsInVision.Contains (obj))
+                ObjectsInVision.Add (obj);
         }
     }
 }
