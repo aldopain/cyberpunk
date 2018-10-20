@@ -58,7 +58,6 @@ public class IK_Legs : MonoBehaviour {
         anim.SetLookAtPosition (targetPos.position);
 
         leftFootWeight = anim.GetFloat ("LeftFoot");
-        Debug.Log(leftFootWeight);
 
         anim.SetIKPositionWeight (AvatarIKGoal.LeftFoot, leftFootWeight);
         anim.SetIKPosition (AvatarIKGoal.LeftFoot, leftFootPos);
