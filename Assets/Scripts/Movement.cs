@@ -78,7 +78,7 @@ public class Movement : MonoBehaviour {
 			
 			direction.y = -1f;
 			transform.LookAt(target, Vector3.up);
-			transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 90, transform.eulerAngles.z);
+			transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
 
             var dash = isDashing ? dashMultiply : 1;
 			cc.Move(direction * Time.deltaTime * Speed * dash);
