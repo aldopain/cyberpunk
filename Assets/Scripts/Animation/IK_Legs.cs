@@ -14,6 +14,7 @@ public class IK_Legs : MonoBehaviour {
 	Transform rightFoot;
 
 	public float offsetY;
+    public float footOffset;
     public float leftFootWeight;
     public float rightFootWeight;
 
@@ -37,22 +38,23 @@ public class IK_Legs : MonoBehaviour {
     void r () {
 		RaycastHit leftHit;
         Vector3 lpos = leftFoot.position;
-        if (Physics.Raycast (lpos, Vector3.down, out leftHit, 1)) {
-            leftFootPos = Vector3.Lerp (lpos, leftHit.point + Vector3.up * offsetY, Time.deltaTime * 10f);
+        if (Physics.Raycast (lpos + Vector3.up * footOffset, Vector3.down, out leftHit, Mathf.Infinity, 1 << 9)) {
+            leftFootPos = leftHit.point + Vector3.up * offsetY;
             leftFootRot = Quaternion.FromToRotation (transform.up, leftHit.normal) * transform.rotation;
             Debug.DrawLine(lpos, leftFootPos);
         }
 
         RaycastHit rightHit;
         Vector3 rpos = rightFoot.position;
-        if (Physics.Raycast (rpos, Vector3.down, out rightHit, 1 << 9)) {
-            rightFootPos = Vector3.Lerp (rpos, rightHit.point + Vector3.up * offsetY, Time.deltaTime * 10f);
+        if (Physics.Raycast (rpos + Vector3.up * footOffset, Vector3.down, out rightHit, Mathf.Infinity, 1 << 9)) {
+            rightFootPos = Vector3.Lerp (rpos, rightHit.point + Vector3.up * offsetY, Time.deltaTime * 100f);
             rightFootRot = Quaternion.FromToRotation (transform.up, rightHit.normal) * transform.rotation;
             Debug.DrawLine(rpos, rightFootPos);
         }
 	}
 
     void OnAnimatorIK () {
+
         anim.SetIKPositionWeight (AvatarIKGoal.LeftFoot, leftFootWeight);
         anim.SetIKPosition (AvatarIKGoal.LeftFoot, leftFootPos);
 
