@@ -32,7 +32,7 @@ public class IK_Legs : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		r();
+		//r();
 	}
 
     void r () {
@@ -54,17 +54,16 @@ public class IK_Legs : MonoBehaviour {
 	}
 
     void OnAnimatorIK () {
-
         anim.SetIKPositionWeight (AvatarIKGoal.LeftFoot, leftFootWeight);
-        anim.SetIKPosition (AvatarIKGoal.LeftFoot, leftFootPos);
+        anim.SetIKPosition (AvatarIKGoal.LeftFoot, lfd.transform.position);
 
-        anim.SetIKRotationWeight (AvatarIKGoal.LeftFoot, leftFootWeight);
-        anim.SetIKRotation (AvatarIKGoal.LeftFoot, leftFootRot);
+        // anim.SetIKRotationWeight (AvatarIKGoal.LeftFoot, leftFootWeight);
+        // anim.SetIKRotation (AvatarIKGoal.LeftFoot, lfd.transform.rotation);
 
         anim.SetIKPositionWeight (AvatarIKGoal.RightFoot, rightFootWeight);
-        anim.SetIKPosition (AvatarIKGoal.RightFoot, rightFootPos);
+        anim.SetIKPosition (AvatarIKGoal.RightFoot, rfd.transform.position);
 
-        anim.SetIKRotationWeight (AvatarIKGoal.RightFoot, rightFootWeight);
-        anim.SetIKRotation (AvatarIKGoal.RightFoot, rightFootRot);
+        // anim.SetIKRotationWeight (AvatarIKGoal.RightFoot, rightFootWeight);
+        // anim.SetIKRotation (AvatarIKGoal.RightFoot, rfd.transform.rotation);
     }
 }

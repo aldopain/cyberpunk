@@ -66,9 +66,12 @@ public class Movement : MonoBehaviour {
 	void Move (bool isDashing) {
 		var h = Input.GetAxisRaw("Horizontal");
 		var v = Input.GetAxisRaw("Vertical");
+        var dash = 1f;
+
+        Vector3 direction = new Vector3 (0f, 0f, 0f);
 
 		if (h != 0 || v != 0) {
-			Vector3 direction = new Vector3(h, 0f, v);
+			direction = new Vector3(h, 0f, v);
 	
 			direction = Camera.main.transform.TransformDirection(direction);
 
@@ -76,13 +79,14 @@ public class Movement : MonoBehaviour {
 			buf.y = transform.position.y;
 			target.position = buf;
 			
-			direction.y = -1f;
 			transform.LookAt(target, Vector3.up);
 			transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
 
-            var dash = isDashing ? dashMultiply : 1;
-			cc.Move(direction * Time.deltaTime * Speed * dash);
+            if (isDashing) dash =  dashMultiply;
 		}
+		
+        direction.y = -1f;
+		cc.Move(direction * Time.deltaTime * Speed * dash);
 	}
 
     void Crouch () {
