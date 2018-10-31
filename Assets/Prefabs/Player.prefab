@@ -686,7 +686,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1058661605359966}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.12399287, y: 0.42732906, z: -0.008930255}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1912,7 +1912,8 @@ MonoBehaviour:
   _line: {fileID: 0}
   useRadialAiming: 0
   AimingDistance: 1
-  AboveGroundCrosshairHeight: 0.8
+  heightOffset: {x: 0, y: 0, z: 0}
+  _gun: {fileID: 0}
 --- !u!136 &136210558265442218
 CapsuleCollider:
   m_ObjectHideFlags: 1
