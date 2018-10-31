@@ -58,8 +58,8 @@ GameObject:
   - component: {fileID: 33521423955567028}
   - component: {fileID: 23160207929739628}
   - component: {fileID: 114604960080475198}
-  - component: {fileID: 64207104900054068}
   - component: {fileID: 135554475651687292}
+  - component: {fileID: 65624214763599208}
   m_Layer: 2
   m_Name: Cube
   m_TagString: Triggers
@@ -276,9 +276,9 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1399373154916408}
-  m_Mesh: {fileID: 4300000, guid: 37fb51850d0aaa74aac806b1f5f496cd, type: 3}
---- !u!64 &64207104900054068
-MeshCollider:
+  m_Mesh: {fileID: 0}
+--- !u!65 &65624214763599208
+BoxCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -286,11 +286,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300000, guid: 37fb51850d0aaa74aac806b1f5f496cd, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 1, z: 1.3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &95604291451412858
 Animator:
   serializedVersion: 3
@@ -429,7 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d901d5e3fe9ed9c4ba6199e5dae5cde8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 2147483647
+  MaxHealth: 3
   CurrentHealth: 0
   StartWithCustomHealth: 0
   OnDeath:
