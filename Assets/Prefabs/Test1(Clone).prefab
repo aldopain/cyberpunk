@@ -25,7 +25,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1043293990831056
 GameObject:
   m_ObjectHideFlags: 1
@@ -862,7 +862,7 @@ GameObject:
   - component: {fileID: 4377783479664196}
   - component: {fileID: 33509530922497418}
   - component: {fileID: 23490343161502682}
-  - component: {fileID: 65974797325857972}
+  - component: {fileID: 95142953962285324}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -1264,8 +1264,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1939711989970512}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.121, y: 1.211, z: 0.387}
-  m_LocalScale: {x: 0.10000001, y: 0.1, z: 1}
+  m_LocalPosition: {x: 0.284, y: 1.211, z: 0.387}
+  m_LocalScale: {x: 1, y: 1, z: 2.5}
   m_Children:
   - {fileID: 4635334112385694}
   - {fileID: 4234360023101822}
@@ -1863,7 +1863,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1939711989970512}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 7735bca9ee5072b479ac1097c222bcc5, type: 3}
 --- !u!54 &54007956739984044
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -2053,18 +2053,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.34007943, y: 0.30072626, z: 0.22722754}
   m_Center: {x: 0, y: 0.15036318, z: 0.011246175}
---- !u!65 &65974797325857972
-BoxCollider:
+--- !u!95 &95142953962285324
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1939711989970512}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Avatar: {fileID: 9000000, guid: 7735bca9ee5072b479ac1097c222bcc5, type: 3}
+  m_Controller: {fileID: 9100000, guid: fe077613f6df85444872a497d418c23f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!95 &95851245015033202
 Animator:
   serializedVersion: 3
@@ -2146,7 +2152,7 @@ MonoBehaviour:
   rb: {fileID: 4234360023101822}
   lb: {fileID: 4635334112385694}
   rightHandWeight: 1
-  leftHandWeight: 0
+  leftHandWeight: 1
 --- !u!135 &135493616392278448
 SphereCollider:
   m_ObjectHideFlags: 1
