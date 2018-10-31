@@ -18,9 +18,6 @@ public class IK_Legs : MonoBehaviour {
     public float leftFootWeight;
     public float rightFootWeight;
 
-    public GameObject rfd;
-    public GameObject lfd;
-
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator>();
@@ -32,7 +29,7 @@ public class IK_Legs : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//r();
+		r();
 	}
 
     void r () {
@@ -54,16 +51,19 @@ public class IK_Legs : MonoBehaviour {
 	}
 
     void OnAnimatorIK () {
-        anim.SetIKPositionWeight (AvatarIKGoal.LeftFoot, leftFootWeight);
-        anim.SetIKPosition (AvatarIKGoal.LeftFoot, lfd.transform.position);
+        // leftFootWeight = anim.GetFloat();
+        // rightFootWeight = anim.GetFloat();
 
-        // anim.SetIKRotationWeight (AvatarIKGoal.LeftFoot, leftFootWeight);
-        // anim.SetIKRotation (AvatarIKGoal.LeftFoot, lfd.transform.rotation);
+        anim.SetIKPositionWeight (AvatarIKGoal.LeftFoot, leftFootWeight);
+        anim.SetIKPosition (AvatarIKGoal.LeftFoot, leftFootPos);
+
+        anim.SetIKRotationWeight (AvatarIKGoal.LeftFoot, leftFootWeight);
+        anim.SetIKRotation (AvatarIKGoal.LeftFoot, leftFootRot);
 
         anim.SetIKPositionWeight (AvatarIKGoal.RightFoot, rightFootWeight);
-        anim.SetIKPosition (AvatarIKGoal.RightFoot, rfd.transform.position);
+        anim.SetIKPosition (AvatarIKGoal.RightFoot, rightFootPos);
 
-        // anim.SetIKRotationWeight (AvatarIKGoal.RightFoot, rightFootWeight);
-        // anim.SetIKRotation (AvatarIKGoal.RightFoot, rfd.transform.rotation);
+        anim.SetIKRotationWeight (AvatarIKGoal.RightFoot, rightFootWeight);
+        anim.SetIKRotation (AvatarIKGoal.RightFoot, rightFootRot);
     }
 }

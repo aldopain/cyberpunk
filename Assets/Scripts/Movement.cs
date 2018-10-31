@@ -31,6 +31,7 @@ public class Movement : MonoBehaviour {
 	CharacterController cc;
     [SerializeField]
     Transform target;
+    Animator animator;
 
     //Original values
 	float originalRotation = -180;
@@ -61,6 +62,7 @@ public class Movement : MonoBehaviour {
         target.position = transform.position;
         originalCCHeight = cc.height;
         Speed = MovementSpeed;
+        animator = GetComponent<Animator>();
 	}
 
 	void Move (bool isDashing) {
@@ -71,6 +73,8 @@ public class Movement : MonoBehaviour {
         Vector3 direction = new Vector3 (0f, 0f, 0f);
 
 		if (h != 0 || v != 0) {
+            animator.SetBool("IsWalking", true);
+
 			direction = new Vector3(h, 0f, v);
 	
 			direction = Camera.main.transform.TransformDirection(direction);
@@ -83,7 +87,9 @@ public class Movement : MonoBehaviour {
 			transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
 
             if (isDashing) dash =  dashMultiply;
-		}
+		} else {
+            animator.SetBool("IsWalking", false);
+        }
 		
         direction.y = -1f;
 		cc.Move(direction * Time.deltaTime * Speed * dash);
@@ -137,6 +143,7 @@ public class Movement : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
+        print (animator.GetBool ("IsWalking"));
         if (Input.GetKeyDown(KeyCode.LeftShift)) {
             Move(true);
         } else {

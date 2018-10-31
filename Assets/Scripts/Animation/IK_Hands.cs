@@ -6,9 +6,11 @@ public class IK_Hands : MonoBehaviour {
 
 	Animator anim;
 
-	public Transform objToPickUp;
+	public Transform rb;
+	public Transform lb;
 
 	public float rightHandWeight;
+	public float leftHandWeight;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +24,9 @@ public class IK_Hands : MonoBehaviour {
 
 	void OnAnimatorIK () {
         anim.SetIKPositionWeight(AvatarIKGoal.RightHand, rightHandWeight);
-        anim.SetIKPosition(AvatarIKGoal.RightHand, objToPickUp.position);
+        anim.SetIKPosition(AvatarIKGoal.RightHand, rb.position);
+		
+        anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, leftHandWeight);
+        anim.SetIKPosition(AvatarIKGoal.LeftHand, lb.position);
 	}
 }
