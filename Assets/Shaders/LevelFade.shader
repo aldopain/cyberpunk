@@ -28,7 +28,13 @@
 
 		void surf(Input IN, inout SurfaceOutput o) {
 			fixed4 pattern = tex2D(_Pattern, IN.uv_Pattern);
-			clip(frac((IN.screenPos.y) * _DissolveLevel) - _Cutout);
+			
+			if (pattern.r > 0.5) {
+				clip(1 - frac((IN.screenPos.y) * _DissolveLevel) - _Cutout);
+			}
+			else {
+				//clip(frac((IN.screenPos.x) * _DissolveLevel) - _Cutout);
+			}
 			
 			o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
 		}

@@ -36,6 +36,17 @@ public class DissolveHelper : MonoBehaviour {
         }
     }
 
+    public void ToggleDissolve()
+    {
+        if (isDissolving)
+        {
+            SolveChildren();
+        }else
+        {
+            DissolveChildren();
+        }
+    }
+
     public void DissolveChildren()
     {
         isDissolving = true;
