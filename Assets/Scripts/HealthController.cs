@@ -11,6 +11,9 @@ public class HealthController : MonoBehaviour {
     private int CurrentHealth;
     public bool StartWithCustomHealth;
 
+    [SerializeField]
+    bool Invincible;
+    bool Immortal;
     public UnityEvent OnDeath;
     public UnityEvent OnHit;
     private bool _isDead;
@@ -24,11 +27,14 @@ public class HealthController : MonoBehaviour {
 	
     void Death()
     {
-        _isDead = true;
-        OnDeath.Invoke();
+        if (!Immortal)
+        {
+            _isDead = true;
+            OnDeath.Invoke();
 
-        //TO BE REPLACED WITH ACTUAL DEATH
-        gameObject.SetActive(false);
+            //TO BE REPLACED WITH ACTUAL DEATH
+            gameObject.SetActive(false);
+        }
     }
 
     public int GetMaxHealth()
@@ -60,18 +66,22 @@ public class HealthController : MonoBehaviour {
 
     public void ChangeHealth(int v)
     {
-        if(CurrentHealth + v > MaxHealth)
-        {
-            CurrentHealth = MaxHealth;
-        }else
-        {
-            if(CurrentHealth + v <= 0)
+        if (!Invincible) {
+            if (CurrentHealth + v > MaxHealth)
             {
-                CurrentHealth = 0;
-                Death();
-            }else
+                CurrentHealth = MaxHealth;
+            }
+            else
             {
-                CurrentHealth += v;
+                if (CurrentHealth + v <= 0)
+                {
+                    CurrentHealth = 0;
+                    Death();
+                }
+                else
+                {
+                    CurrentHealth += v;
+                }
             }
         }
     }
