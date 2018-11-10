@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerAiming : MonoBehaviour {
     public LayerMask mask;
     public Crosshair _crosshair;
+    public Crosshair _mouseCrosshair;
     public LineRenderer _line;
     public bool useRadialAiming;
     public float AimingDistance;
     public Vector3 heightOffset;
     private Vector3 target;
 
+    public float transparencyMultiplier;
     private float RotationAngle;
 
     public GameObject _gun;
@@ -20,7 +22,6 @@ public class PlayerAiming : MonoBehaviour {
         _line.transform.position = Vector3.zero;
         _line.SetPosition(0, Vector3.zero);
         heightOffset = new Vector3 (0.989949f, 1f, 1.02813133f);
-        //_gun = GameObject.Find ("Flamethrower"); 
 	}
 
     public Vector3 GetTargetPosition() { 
@@ -72,12 +73,50 @@ public class PlayerAiming : MonoBehaviour {
         RaycastHit rh;
         Ray ray = new Ray(GunPosition, target - GunPosition);
 
-        if (Physics.Raycast (ray, out rh, AimingDistance)) {
-            _crosshair.transform.position = rh.point;
-        } else {
-            _crosshair.transform.position = GunPosition + AimingDistance * (target - GunPosition).normalized;
+
+        if(Vector3.Distance(mousePositionInWorld, transform.position) < AimingDistance)
+        {
+            if (Physics.Raycast(ray, out rh, AimingDistance))
+            {
+                if(Vector3.Distance(mousePositionInWorld, transform.position) < Vector3.Distance(rh.point, transform.position))
+                {
+                    _crosshair.transform.position = target;
+
+                    _mouseCrosshair.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0);
+                }
+                else
+                {
+                    _crosshair.transform.position = rh.point;
+
+                    _mouseCrosshair.transform.position = target;
+                    _mouseCrosshair.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, Mathf.Pow(Vector3.Distance(mousePositionInWorld, rh.point), 2) * transparencyMultiplier);
+                }
+            }else
+            {
+                _crosshair.transform.position = target;
+
+                _mouseCrosshair.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+            }
+        }
+        else
+        {
+            if (Physics.Raycast(ray, out rh, AimingDistance))
+            {
+                _crosshair.transform.position = rh.point;
+
+                _mouseCrosshair.transform.position = target;
+                _mouseCrosshair.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, Mathf.Pow(Vector3.Distance(mousePositionInWorld, rh.point), 2) * transparencyMultiplier);
+            }
+            else
+            {
+                _crosshair.transform.position = GunPosition + AimingDistance * (target - GunPosition).normalized;
+
+                _mouseCrosshair.transform.position = target;
+                _mouseCrosshair.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, Mathf.Pow(Vector3.Distance(mousePositionInWorld, _crosshair.transform.position), 2) * transparencyMultiplier);
+            }
         }
 
+        //_mouseCrosshair.transform.position = mousePositionInWorld;
         _line.SetPosition(1, _crosshair.transform.position);
     }
 }
