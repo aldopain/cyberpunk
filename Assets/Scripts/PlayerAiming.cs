@@ -54,6 +54,12 @@ public class PlayerAiming : MonoBehaviour {
         return _crosshair.transform.position;
     }
 
+    void SetupMouseCrosshair(Vector3 a, Vector3 b)
+    {
+        _mouseCrosshair.transform.position = target;
+        _mouseCrosshair.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, Mathf.Pow(Vector3.Distance(a, b), 2) * transparencyMultiplier);
+    }
+
 	// Update is called once per frame
 	void FixedUpdate () {
         // Set the start of the line at the player position
@@ -76,7 +82,7 @@ public class PlayerAiming : MonoBehaviour {
 
         if(Vector3.Distance(mousePositionInWorld, transform.position) < AimingDistance)
         {
-            if (Physics.Raycast(ray, out rh, AimingDistance))
+            if (Physics.Raycast(ray, out rh, AimingDistance, mask))
             {
                 if(Vector3.Distance(mousePositionInWorld, transform.position) < Vector3.Distance(rh.point, transform.position))
                 {
@@ -88,8 +94,7 @@ public class PlayerAiming : MonoBehaviour {
                 {
                     _crosshair.transform.position = rh.point;
 
-                    _mouseCrosshair.transform.position = target;
-                    _mouseCrosshair.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, Mathf.Pow(Vector3.Distance(mousePositionInWorld, rh.point), 2) * transparencyMultiplier);
+                    SetupMouseCrosshair(mousePositionInWorld, rh.point);
                 }
             }else
             {
@@ -104,19 +109,16 @@ public class PlayerAiming : MonoBehaviour {
             {
                 _crosshair.transform.position = rh.point;
 
-                _mouseCrosshair.transform.position = target;
-                _mouseCrosshair.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, Mathf.Pow(Vector3.Distance(mousePositionInWorld, rh.point), 2) * transparencyMultiplier);
+                SetupMouseCrosshair(mousePositionInWorld, rh.point);
             }
             else
             {
                 _crosshair.transform.position = GunPosition + AimingDistance * (target - GunPosition).normalized;
 
-                _mouseCrosshair.transform.position = target;
-                _mouseCrosshair.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, Mathf.Pow(Vector3.Distance(mousePositionInWorld, _crosshair.transform.position), 2) * transparencyMultiplier);
+                SetupMouseCrosshair(mousePositionInWorld, _crosshair.transform.position);
             }
         }
 
-        //_mouseCrosshair.transform.position = mousePositionInWorld;
         _line.SetPosition(1, _crosshair.transform.position);
     }
 }
