@@ -1131,6 +1131,8 @@ MonoBehaviour:
   footOffset: 0.5
   leftFootWeight: 1
   rightFootWeight: 1
+  rightFootForwardOffset: 0
+  leftFootForwardOffset: 0
 --- !u!114 &842133030
 MonoBehaviour:
   m_ObjectHideFlags: 0
