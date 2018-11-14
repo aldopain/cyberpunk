@@ -17,6 +17,10 @@ public class IK_Legs : MonoBehaviour {
     public float footOffset;
     public float leftFootWeight;
     public float rightFootWeight;
+    public float rightFootForwardOffset;
+    public float leftFootForwardOffset;
+
+    private float i = 0f;
 
 	// Use this for initialization
 	void Start () {
@@ -33,9 +37,13 @@ public class IK_Legs : MonoBehaviour {
 	}
 
     void r () {
+        i += Time.deltaTime;
+        float a = Mathf.Cos(i);
+        float b = Mathf.Sin(i - Mathf.PI / 2);
+
 		RaycastHit leftHit;
         Vector3 lpos = leftFoot.position;
-        if (Physics.Raycast (lpos + Vector3.up * footOffset, Vector3.down, out leftHit, Mathf.Infinity, 1 << 9)) {
+        if (Physics.Raycast (lpos + Vector3.up * footOffset + transform.forward * (leftFootWeight - 0.5f) , -Vector3.up, out leftHit, Mathf.Infinity, 1 << 9)) {
             leftFootPos = leftHit.point + Vector3.up * offsetY;
             leftFootRot = Quaternion.FromToRotation (transform.up, leftHit.normal) * transform.rotation;
             Debug.DrawLine(lpos, leftFootPos);
@@ -43,7 +51,7 @@ public class IK_Legs : MonoBehaviour {
 
         RaycastHit rightHit;
         Vector3 rpos = rightFoot.position;
-        if (Physics.Raycast (rpos + Vector3.up * footOffset, Vector3.down, out rightHit, Mathf.Infinity, 1 << 9)) {
+        if (Physics.Raycast (rpos + Vector3.up * footOffset + transform.forward * (rightFootWeight - 0.5f), -Vector3.up, out rightHit, Mathf.Infinity, 1 << 9)) {
             rightFootPos = Vector3.Lerp (rpos, rightHit.point + Vector3.up * offsetY, Time.deltaTime * 100f);
             rightFootRot = Quaternion.FromToRotation (transform.up, rightHit.normal) * transform.rotation;
             Debug.DrawLine(rpos, rightFootPos);
@@ -51,9 +59,6 @@ public class IK_Legs : MonoBehaviour {
 	}
 
     void OnAnimatorIK () {
-        // leftFootWeight = anim.GetFloat();
-        // rightFootWeight = anim.GetFloat();
-
         anim.SetIKPositionWeight (AvatarIKGoal.LeftFoot, leftFootWeight);
         anim.SetIKPosition (AvatarIKGoal.LeftFoot, leftFootPos);
 
