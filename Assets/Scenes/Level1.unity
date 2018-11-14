@@ -37827,6 +37827,21 @@ Prefab:
       propertyPath: orthographic size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114026368598938180, guid: 1e76d46b103c02148a62f5af2e335417,
+        type: 2}
+      propertyPath: orthoSizeTarget_Crouch
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026368598938180, guid: 1e76d46b103c02148a62f5af2e335417,
+        type: 2}
+      propertyPath: orthoSizeTarget_Freelook
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026368598938180, guid: 1e76d46b103c02148a62f5af2e335417,
+        type: 2}
+      propertyPath: FreelookLength
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e76d46b103c02148a62f5af2e335417, type: 2}
   m_IsPrefabAsset: 0
