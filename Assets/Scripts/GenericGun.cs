@@ -12,6 +12,9 @@ public class GenericGun : MonoBehaviour {
 
     [Header("Gun Settings")]
     public Bullet BulletPrefab;
+    public int Damage;
+    public float Range;
+    public float ShootingVelocity;
     public float ShootingDelay;
     public int MaxMagazineCapacity;
     public float ReloadTime;
@@ -96,7 +99,7 @@ public class GenericGun : MonoBehaviour {
                     consecutiveShotsFired++;
                     for (int i = 0; i < BulletsPerShot; i++) {
                         GameObject bullet = Instantiate(BulletPrefab.gameObject, transform.position, transform.rotation);
-                        bullet.GetComponent<Bullet>().Shoot();
+                        bullet.GetComponent<Bullet>().Shoot(Damage, Range, ShootingVelocity);
                     }
                 }
             }
@@ -108,7 +111,7 @@ public class GenericGun : MonoBehaviour {
     }
 
     public float GetRange () {
-        return BulletPrefab != null ? BulletPrefab.Range : 0;
+        return Range;
     }
 
     IEnumerator Reload () {

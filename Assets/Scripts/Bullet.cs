@@ -5,32 +5,22 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class Bullet : MonoBehaviour
 {
-    public float ShootingVelocity;
-    public int Damage;
-    public float Range;
+    public float ShootingVelocityModifier;
+    public int DamageModifier;
+    private float Range;
     public float AngleDeflectionAbs;
     public string[] IgnoredTags;
     public string[] TransmittedComponents;
-
-    private Vector3 StartPosition;
-    // Use this for initialization
-    void Start()
-    {
-        StartPosition = transform.position;
-        Destroy(this.gameObject, Range / ShootingVelocity);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void Shoot()
+    private int Damage;
+    public void Shoot(int _damage, float _range, float _velocity)
     {
         if (Time.timeScale != 0f) {
+            Damage = DamageModifier + _damage;
+            Range = _range;
+
             transform.Rotate (new Vector3 (0, Random.Range(-AngleDeflectionAbs, AngleDeflectionAbs), 0));
-            GetComponent<Rigidbody>().velocity = ShootingVelocity * transform.forward;
+            GetComponent<Rigidbody>().velocity = _velocity * ShootingVelocityModifier * transform.forward;
+            Destroy(this.gameObject, Range / (_velocity * ShootingVelocityModifier));
         }
     }
 
